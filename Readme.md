@@ -1,0 +1,1 @@
+﻿dotnet ef migrations add Initial -o DataAccess/Migrations -p EmployeeService.Infrastructure -s EmployeeService.Api
