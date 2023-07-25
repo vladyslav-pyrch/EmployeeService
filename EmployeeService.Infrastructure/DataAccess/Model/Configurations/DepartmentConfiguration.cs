@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-namespace EmployeeService.Infrastructure.DataAccess.Model.Configuration;
+namespace EmployeeService.Infrastructure.DataAccess.Model.Configurations;
 
 public class DepartmentConfiguration : IEntityTypeConfiguration<Department>
 {
