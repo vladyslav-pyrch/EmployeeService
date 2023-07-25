@@ -1,12 +1,12 @@
 ﻿using EmployeeService.Common.Domain.Model;
 using EmployeeService.Domain.Model.Employees;
+using EmployeeService.Domain.Model.SharedKernel;
 
 namespace EmployeeService.Domain.Model.Companies.Departments;
 
-public class Department : IEntity<DepartmentId>
+public class Department : Entity<DepartmentId>
 {
     private readonly CompanyId _companyId = null!;
-    private readonly DepartmentId _identity = null!;
 
     private List<EmployeeId> _employeeIds = null!;
 
@@ -15,24 +15,12 @@ public class Department : IEntity<DepartmentId>
     private PhoneNumber _phoneNumber = null!;
 
     public Department(DepartmentId identity, string name, PhoneNumber phoneNumber, CompanyId companyId,
-        List<EmployeeId>? employeeIds = null)
+        List<EmployeeId>? employeeIds = null) : base(identity)
     {
-        Identity = identity;
         Name = name;
         PhoneNumber = phoneNumber;
         CompanyId = companyId;
         EmployeeIds = employeeIds ?? new List<EmployeeId>();
-    }
-    
-    public DepartmentId Identity
-    {
-        get => _identity;
-        private init
-        {
-            ArgumentNullException.ThrowIfNull(value);
-
-            _identity = value;
-        }
     }
 
     public string Name

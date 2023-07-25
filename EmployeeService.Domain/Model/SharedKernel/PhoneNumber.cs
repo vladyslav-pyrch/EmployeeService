@@ -1,6 +1,6 @@
 ﻿using EmployeeService.Common.Domain.Model;
 
-namespace EmployeeService.Domain.Model.Employees;
+namespace EmployeeService.Domain.Model.SharedKernel;
 
 public record PhoneNumber : ValueObject
 {

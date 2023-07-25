@@ -3,30 +3,16 @@ using EmployeeService.Domain.Model.Companies.Departments;
 
 namespace EmployeeService.Domain.Model.Companies;
 
-public class Company : IEntity<CompanyId>
+public class Company : Entity<CompanyId>
 {
-    private readonly CompanyId _identity = null!;
-
     private List<Department> _departments = null!;
 
     private string _name = null!;
 
-    public Company(CompanyId identity, string name, List<Department>? departments = null)
+    public Company(CompanyId identity, string name, List<Department>? departments = null) : base(identity)
     {
-        Identity = identity;
         Name = name;
         Departments = departments ?? new List<Department>();
-    }
-
-    public CompanyId Identity
-    {
-        get => _identity;
-        private init
-        {
-            ArgumentNullException.ThrowIfNull(value);
-
-            _identity = value;
-        }
     }
     
     public string Name

@@ -1,11 +1,10 @@
 ﻿using EmployeeService.Common.Domain.Model;
+using EmployeeService.Domain.Model.SharedKernel;
 
 namespace EmployeeService.Domain.Model.Employees;
 
-public class Employee : IEntity<EmployeeId>
+public class Employee : Entity<EmployeeId>
 {
-    private readonly EmployeeId _identity = null!;
-
     private string _name = null!;
 
     private Passport _passport = null!;
@@ -17,25 +16,13 @@ public class Employee : IEntity<EmployeeId>
     private Workplace _workplace = null!;
 
     public Employee(EmployeeId identity, string name, string surname, Passport passport, PhoneNumber phoneNumber,
-        Workplace workplace)
+        Workplace workplace) : base(identity)
     {
-        Identity = identity;
         Name = name;
         Surname = surname;
         Passport = passport;
         PhoneNumber = phoneNumber;
         Workplace = workplace;
-    }
-    
-    public EmployeeId Identity
-    {
-        get => _identity;
-        private init
-        {
-            ArgumentNullException.ThrowIfNull(value);
-
-            _identity = value;
-        }
     }
 
     public string Name
