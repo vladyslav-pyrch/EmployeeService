@@ -9,5 +9,8 @@ public interface IDomainEventDispatcher
     public void Publish<TDomainEvent>(TDomainEvent domainEvent) where TDomainEvent : IDomainEvent;
     
     public void Register<TDomainEvent>(IDomainEventHandler<TDomainEvent> subscriber) where TDomainEvent : IDomainEvent;
-    
+
+    public void Register<TDomainEvent>(Action<TDomainEvent> handle, Guid? subscriberId = null)
+        where TDomainEvent : IDomainEvent;
+
 }
