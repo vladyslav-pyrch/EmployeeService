@@ -25,8 +25,9 @@ public abstract class Entity<TIdentity> : IEntity<TIdentity> where TIdentity : I
 
     public IReadOnlyList<IDomainEvent> DomainEvents => _domainEvents.AsReadOnly();
 
+    protected string Source => GetType().Name;
+
     public void ClearDomainEvents() => _domainEvents.Clear();
     
     protected void AddDomainEvent(IDomainEvent domainEvent) => _domainEvents.Add(domainEvent);
-    
 }

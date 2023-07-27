@@ -26,7 +26,7 @@ public class Department : Entity<DepartmentId>
     public string Name
     {
         get => _name;
-        set
+        private set
         {
             ArgumentNullException.ThrowIfNull(value);
 
@@ -37,7 +37,7 @@ public class Department : Entity<DepartmentId>
     public PhoneNumber PhoneNumber
     {
         get => _phoneNumber;
-        set
+        private set
         {
             ArgumentNullException.ThrowIfNull(value);
 
@@ -59,11 +59,25 @@ public class Department : Entity<DepartmentId>
     public List<EmployeeId> EmployeeIds
     {
         get => _employeeIds.ToList();
-        set
+        private set
         {
             ArgumentNullException.ThrowIfNull(value);
 
             _employeeIds = value;
         }
+    }
+
+    public void ChangeName(string name)
+    {
+        Name = name;
+        
+        AddDomainEvent(new DepartmentsNameChanged(Source));
+    }
+
+    public void ChangePhoneNumber(PhoneNumber phoneNumber)
+    {
+        PhoneNumber = phoneNumber;
+        
+        AddDomainEvent(new DepartmentsPhoneNumberChanged(Source));
     }
 }

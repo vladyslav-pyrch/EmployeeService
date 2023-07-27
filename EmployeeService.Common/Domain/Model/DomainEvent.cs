@@ -1,8 +1,8 @@
 ﻿namespace EmployeeService.Common.Domain.Model;
 
-public record DomainEvent : IDomainEvent
+public abstract record DomainEvent : IDomainEvent
 {
-    public DomainEvent(string source, string version = "1.0", Guid? subscriberId = null)
+    protected DomainEvent(string source, string version = "1.0", Guid? subscriberId = null)
     {
         AggregateSource = source;
         Version = version;
@@ -10,8 +10,8 @@ public record DomainEvent : IDomainEvent
         SubscriberId = subscriberId;
     }
     
-    public string AggregateSource { get; }
-    public string Version { get; }
-    public DateTime OccuredOn { get; }
+    public string AggregateSource { get; set; }
+    public string Version { get; set; }
+    public DateTime OccuredOn { get; set; }
     public Guid? SubscriberId { get; }
 }

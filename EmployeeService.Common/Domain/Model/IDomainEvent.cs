@@ -2,11 +2,11 @@
 
 public interface IDomainEvent
 {
-    public string AggregateSource { get; }
+    public string AggregateSource { get; set; }
     
-    public string Version { get; }
+    public string Version { get; set; }
     
-    public DateTime OccuredOn { get; }
+    public DateTime OccuredOn { get; set; }
     
     public Guid? SubscriberId { get; }
 }

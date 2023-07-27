@@ -18,15 +18,15 @@ public sealed class DomainEventSource : EventSource
         
         string payload = JsonSerializer.Serialize(domainEvent);
         
-        Log(domainEvent.AggregateSource, domainEvent.Version, payload);
+        Log(domainEvent.AggregateSource, domainEvent.GetType().Name, domainEvent.Version, payload);
     }
 
     [Event(DomainEventId, Level = EventLevel.Informational, Message = "{0}")]
-    public void Log(string source, string version, string payload)
+    public void Log(string source, string name, string version, string payload)
     {
         if (!IsEnabled()) 
             return;
         
-        WriteEvent(DomainEventId, source, version, payload);
+        WriteEvent(DomainEventId, source, name, version, payload);
     }
 }

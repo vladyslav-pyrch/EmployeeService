@@ -1,4 +1,5 @@
 ﻿using EmployeeService.Common.Domain.Model;
+using EmployeeService.Domain.Model.Companies.Departments;
 using EmployeeService.Domain.Model.SharedKernel;
 
 namespace EmployeeService.Domain.Model.Employees;
@@ -28,7 +29,7 @@ public class Employee : Entity<EmployeeId>
     public string Name
     {
         get => _name;
-        set
+        private set
         {
             ArgumentNullException.ThrowIfNull(value);
 
@@ -41,12 +42,11 @@ public class Employee : Entity<EmployeeId>
             _name = value;
         }
     }
-
-
+    
     public string Surname
     {
         get => _surname;
-        set
+        private set
         {
             ArgumentNullException.ThrowIfNull(value);
 
@@ -63,7 +63,7 @@ public class Employee : Entity<EmployeeId>
     public Passport Passport
     {
         get => _passport;
-        set
+        private set
         {
             ArgumentNullException.ThrowIfNull(value);
 
@@ -74,7 +74,7 @@ public class Employee : Entity<EmployeeId>
     public PhoneNumber PhoneNumber
     {
         get => _phoneNumber;
-        set
+        private set
         {
             ArgumentNullException.ThrowIfNull(value);
 
@@ -85,12 +85,54 @@ public class Employee : Entity<EmployeeId>
     public Workplace Workplace
     {
         get => _workplace;
-        set
+        private set
         {
             ArgumentNullException.ThrowIfNull(value);
 
             _workplace = value;
         }
+    }
+
+    public void ChangeName(string name)
+    {
+        Name = name;
+        
+        AddDomainEvent(new EmployeesNameChanged(Source));
+    }
+
+    public void ChangeSurname(string surname)
+    {
+        Surname = surname;
+        
+        AddDomainEvent(new EmployeesSurnameChanged(Source));
+    }
+
+    public void ChangePassport(Passport passport)
+    {
+        Passport = passport;
+        
+        AddDomainEvent(new PassportChanged(Source));
+    }
+
+    public void ChangePhoneNumber(PhoneNumber phoneNumber)
+    {
+        PhoneNumber = phoneNumber;
+        
+        AddDomainEvent(new EmployeesPhoneNumberChanged(Source));
+    }
+
+    public void ChangeWorkplace(Workplace workplace)
+    {
+        Workplace = workplace;
+        
+        AddDomainEvent(new WorkplaceChanged(Source));
+    }
+
+    public void ChangeDepartment(DepartmentId department)
+    {
+        Workplace = new Workplace(Workplace.Company, department);
+        
+        AddDomainEvent(new DepartmentChanged(Source));
     }
 
     private static bool IsCapitalised(string properNoun)
