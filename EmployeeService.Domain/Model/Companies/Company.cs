@@ -1,6 +1,5 @@
 ﻿using EmployeeService.Common.Domain.Model;
 using EmployeeService.Domain.Model.Companies.Departments;
-using EmployeeService.Domain.Model.Employees;
 using EmployeeService.Domain.Model.SharedKernel;
 
 namespace EmployeeService.Domain.Model.Companies;

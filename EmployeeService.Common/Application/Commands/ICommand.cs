@@ -2,12 +2,12 @@
 
 namespace EmployeeService.Common.Application.Commands;
 
-public interface ICommand<out TIdentity> where TIdentity : IIdentity
+public interface ICommand
 {
-    public TIdentity Identity { get; }
+    public Guid Id { get; }
 }
 
-public interface ICommand<out TIdentity, out TResult> where TIdentity : IIdentity
+public interface ICommand<out TResult>
 {
-    public TIdentity Identity { get; }
+    public Guid Id { get; }
 }

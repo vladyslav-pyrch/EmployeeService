@@ -5,7 +5,7 @@ namespace EmployeeService.Application.Employees.CreateEmployee;
 
 public class CreateEmployeeCommand : Command<EmployeeId>
 {
-    public CreateEmployeeCommand(EmployeeId identity, EmployeeDto employeeDto) : base(identity)
+    public CreateEmployeeCommand(Guid id, EmployeeDto employeeDto) : base(id)
     {
         EmployeeDto = employeeDto;
     }

@@ -2,44 +2,22 @@
 
 namespace EmployeeService.Common.Application.Commands;
 
-public abstract class Command<TIdentity> : ICommand<TIdentity> where TIdentity : IIdentity
+public abstract class Command : ICommand
 {
-    private readonly TIdentity _identity = default!;
-
-    protected Command(TIdentity identity)
+    protected Command(Guid id)
     {
-        Identity = identity;
+        Id = id;
     }
 
-    public TIdentity Identity
-    {
-        get => _identity;
-        private init
-        {
-            ArgumentNullException.ThrowIfNull(value);
-
-            _identity = value;
-        }
-    }
+    public Guid Id { get; }
 }
 
-public abstract class Command<TIdentity, TResult> : ICommand<TIdentity, TResult> where TIdentity : IIdentity
+public abstract class Command<TResult> : ICommand< TResult>
 {
-    private readonly TIdentity _identity = default!;
-
-    protected Command(TIdentity identity)
+    protected Command(Guid id)
     {
-        Identity = identity;
+        Id = id;
     }
 
-    public TIdentity Identity
-    {
-        get => _identity;
-        private init
-        {
-            ArgumentNullException.ThrowIfNull(value);
-
-            _identity = value;
-        }
-    }
+    public Guid Id { get; }
 }
