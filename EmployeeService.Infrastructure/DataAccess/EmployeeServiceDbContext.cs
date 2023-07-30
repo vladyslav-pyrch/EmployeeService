@@ -1,20 +1,21 @@
 ﻿using System.Reflection;
-using EmployeeService.Infrastructure.DataAccess.Model;
+using EmployeeService.Infrastructure.Domain.Companies;
+using EmployeeService.Infrastructure.Domain.Employees;
 using Microsoft.EntityFrameworkCore;
 
 namespace EmployeeService.Infrastructure.DataAccess;
 
 public class EmployeeServiceDbContext : DbContext
 {
-    public DbSet<Employee> Employees { get; set; } = null!;
+    public DbSet<EmployeeModel> Employees { get; set; } = null!;
     
-    public DbSet<Company> Companies { get; set; } = null!;
+    public DbSet<CompanyModel> Companies { get; set; } = null!;
     
-    public DbSet<Department> Departments { get; set; } = null!;
+    public DbSet<DepartmentModel> Departments { get; set; } = null!;
     
-    public DbSet<Passport> Passports { get; set; } = null!;
+    public DbSet<PassportModel> Passports { get; set; } = null!;
     
-    public DbSet<PassportType> PassportTypes { get; set; } = null!;
+    public DbSet<PassportTypeModel> PassportTypes { get; set; } = null!;
 
     public EmployeeServiceDbContext(DbContextOptions options): base(options) { }
     

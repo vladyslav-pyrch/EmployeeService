@@ -1,6 +1,6 @@
-﻿namespace EmployeeService.Infrastructure.DataAccess.Model;
+﻿namespace EmployeeService.Infrastructure.Domain.Employees;
 
-public class Employee
+public class EmployeeModel
 {
     public int Id { get; set; }
 

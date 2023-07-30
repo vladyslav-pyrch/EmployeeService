@@ -1,11 +1,12 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using EmployeeService.Infrastructure.Domain.Companies;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-namespace EmployeeService.Infrastructure.DataAccess.Model.Configurations;
+namespace EmployeeService.Infrastructure.Domain.Employees;
 
-public class EmployeeConfiguration : IEntityTypeConfiguration<Employee>
+public class EmployeeModelEntityTypeConfiguration : IEntityTypeConfiguration<EmployeeModel>
 {
-    public void Configure(EntityTypeBuilder<Employee> builder)
+    public void Configure(EntityTypeBuilder<EmployeeModel> builder)
     {
         builder.HasKey(employee => employee.Id);
         builder.Property(employee => employee.Name)
@@ -17,12 +18,12 @@ public class EmployeeConfiguration : IEntityTypeConfiguration<Employee>
         builder.Property(employee => employee.Phone)
             .HasMaxLength(15)
             .IsRequired();
-        builder.HasOne<Passport>()
+        builder.HasOne<PassportModel>()
             .WithOne()
-            .HasForeignKey<Employee>(employee => employee.PassportId)
+            .HasForeignKey<EmployeeModel>(employee => employee.PassportId)
             .OnDelete(DeleteBehavior.Cascade)
             .IsRequired();
-        builder.HasOne<Department>()
+        builder.HasOne<DepartmentModel>()
             .WithMany()
             .HasForeignKey(employee => employee.DepartmentId)
             .IsRequired()

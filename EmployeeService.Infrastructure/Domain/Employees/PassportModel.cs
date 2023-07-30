@@ -1,6 +1,6 @@
-﻿namespace EmployeeService.Infrastructure.DataAccess.Model;
+﻿namespace EmployeeService.Infrastructure.Domain.Employees;
 
-public class Passport
+public class PassportModel
 {
     public int Id { get; set; }
     

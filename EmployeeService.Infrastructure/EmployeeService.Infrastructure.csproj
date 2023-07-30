@@ -21,8 +21,4 @@
       <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="6.0.20" />
     </ItemGroup>
 
-    <ItemGroup>
-      <Folder Include="DataAccess\Repositories\" />
-    </ItemGroup>
-
 </Project>

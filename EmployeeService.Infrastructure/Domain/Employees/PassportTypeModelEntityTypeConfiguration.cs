@@ -1,17 +1,17 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-namespace EmployeeService.Infrastructure.DataAccess.Model.Configurations;
+namespace EmployeeService.Infrastructure.Domain.Employees;
 
-public class PassportTypeConfiguration : IEntityTypeConfiguration<PassportType>
+public class PassportTypeModelEntityTypeConfiguration : IEntityTypeConfiguration<PassportTypeModel>
 {
-    public void Configure(EntityTypeBuilder<PassportType> builder)
+    public void Configure(EntityTypeBuilder<PassportTypeModel> builder)
     {
         builder.HasKey(type => type.Id);
         builder.Property(type => type.Name)
             .HasMaxLength(50)
             .IsRequired();
-        builder.HasMany<Passport>()
+        builder.HasMany<PassportModel>()
             .WithOne()
             .HasForeignKey(passport => passport.PassportTypeId)
             .OnDelete(DeleteBehavior.Cascade);

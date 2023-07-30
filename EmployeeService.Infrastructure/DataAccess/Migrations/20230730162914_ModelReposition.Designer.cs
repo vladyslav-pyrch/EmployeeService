@@ -2,6 +2,7 @@
 using EmployeeService.Infrastructure.DataAccess;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -9,9 +10,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace EmployeeService.Infrastructure.DataAccess.Migrations
 {
     [DbContext(typeof(EmployeeServiceDbContext))]
-    partial class EmployeeServiceDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230730162914_ModelReposition")]
+    partial class ModelReposition
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "6.0.20");
