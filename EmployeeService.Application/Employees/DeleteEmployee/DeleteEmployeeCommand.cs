@@ -5,10 +5,7 @@ namespace EmployeeService.Application.Employees.DeleteEmployee;
 
 public class DeleteEmployeeCommand : Command
 {
-    public DeleteEmployeeCommand(Guid id, EmployeeId employeeId) : base(id)
-    {
-        EmployeeId = employeeId;
-    }
-    
-    public EmployeeId EmployeeId { get; }
+	public DeleteEmployeeCommand(Guid id, EmployeeId employeeId) : base(id) => EmployeeId = employeeId;
+
+	public EmployeeId EmployeeId { get; }
 }

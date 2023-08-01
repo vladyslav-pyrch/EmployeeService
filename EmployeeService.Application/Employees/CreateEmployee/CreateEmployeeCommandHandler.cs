@@ -7,30 +7,31 @@ namespace EmployeeService.Application.Employees.CreateEmployee;
 
 public class CreateEmployeeCommandHandler : ICommandHandler<CreateEmployeeCommand, EmployeeId>
 {
-    private readonly IIdentityFactory<EmployeeId> _identityFactory;
-    private readonly IEmployeeRepository _employeeRepository;
-    private readonly IDomainEventDispatcher _domainEventDispatcher;
-    
-    public CreateEmployeeCommandHandler(IIdentityFactory<EmployeeId> identityFactory, IEmployeeRepository employeeRepository, IDomainEventDispatcher domainEventDispatcher)
-    {
-        _identityFactory = identityFactory;
-        _employeeRepository = employeeRepository;
-        _domainEventDispatcher = domainEventDispatcher;
-    }
-    
-    public EmployeeId Handle(CreateEmployeeCommand command)
-    {
-        EmployeeId id = _identityFactory.GenerateId();
+	private readonly IDomainEventDispatcher _domainEventDispatcher;
+	private readonly IEmployeeRepository _employeeRepository;
+	private readonly IIdentityFactory<EmployeeId> _identityFactory;
 
-        var (name, surname, passport, phoneNumber, workplace) = command;
-        
-        var employee = new Employee(id, name, surname, passport, phoneNumber, workplace);
-        
-        _employeeRepository.AddEmployee(employee);
-        _employeeRepository.Save();
-        
-        _domainEventDispatcher.Publish(new EmployeeCreated(nameof(Employee)));
+	public CreateEmployeeCommandHandler(IIdentityFactory<EmployeeId> identityFactory,
+		IEmployeeRepository employeeRepository, IDomainEventDispatcher domainEventDispatcher)
+	{
+		_identityFactory = identityFactory;
+		_employeeRepository = employeeRepository;
+		_domainEventDispatcher = domainEventDispatcher;
+	}
 
-        return id;
-    }
+	public EmployeeId Handle(CreateEmployeeCommand command)
+	{
+		EmployeeId id = _identityFactory.GenerateId();
+
+		(string name, string surname, Passport passport, PhoneNumber phoneNumber, Workplace workplace) = command;
+
+		var employee = new Employee(id, name, surname, passport, phoneNumber, workplace);
+
+		_employeeRepository.AddEmployee(employee);
+		_employeeRepository.Save();
+
+		_domainEventDispatcher.Publish(new EmployeeCreated(nameof(Employee)));
+
+		return id;
+	}
 }

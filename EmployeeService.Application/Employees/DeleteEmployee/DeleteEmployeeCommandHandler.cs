@@ -6,19 +6,20 @@ namespace EmployeeService.Application.Employees.DeleteEmployee;
 
 public class DeleteEmployeeCommandHandler : ICommandHandler<DeleteEmployeeCommand>
 {
-    private readonly IEmployeeRepository _employeeRepository;
-    private readonly IDomainEventDispatcher _domainEventDispatcher;
+	private readonly IDomainEventDispatcher _domainEventDispatcher;
+	private readonly IEmployeeRepository _employeeRepository;
 
-    public DeleteEmployeeCommandHandler(IEmployeeRepository employeeRepository, IDomainEventDispatcher domainEventDispatcher)
-    {
-        _employeeRepository = employeeRepository;
-        _domainEventDispatcher = domainEventDispatcher;
-    }
+	public DeleteEmployeeCommandHandler(IEmployeeRepository employeeRepository,
+		IDomainEventDispatcher domainEventDispatcher)
+	{
+		_employeeRepository = employeeRepository;
+		_domainEventDispatcher = domainEventDispatcher;
+	}
 
-    public void Handle(DeleteEmployeeCommand command)
-    {
-        _employeeRepository.DeleteById(command.EmployeeId);
-        
-        _domainEventDispatcher.Publish(new EmployeeDeleted(nameof(Employee)));
-    }
+	public void Handle(DeleteEmployeeCommand command)
+	{
+		_employeeRepository.DeleteById(command.EmployeeId);
+
+		_domainEventDispatcher.Publish(new EmployeeDeleted(nameof(Employee)));
+	}
 }
