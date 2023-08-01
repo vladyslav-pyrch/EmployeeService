@@ -1,6 +1,7 @@
 ## My
-LocalTestDatabase.db
-LocalDatabase.db
+*.db
+*.db-shm
+*.db-wal
 
 ### VisualStudioCode template
 .vscode/*
