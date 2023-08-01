@@ -2,7 +2,7 @@
 using EmployeeService.Domain.Model.Companies;
 using EmployeeService.Domain.Model.Employees;
 
-namespace EmployeeService.Application.Companies.GetAllEmployeeOfCompany;
+namespace EmployeeService.Application.Employees.GetAllEmployeeOfCompany;
 
 public class GetAllEmployeeOfCompanyQuery : IQuery<List<Employee>>
 {
