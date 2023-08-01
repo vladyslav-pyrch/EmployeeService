@@ -1,4 +1,4 @@
-using EmployeeService.Application.Companies.GetAllDepartmentsOfCompany;
+using EmployeeService.Application.Companies.GetDepartmentOfEmployee;
 using EmployeeService.Application.Employees.GetAllEmployeeOfCompany;
 using EmployeeService.Common.Application.Data;
 using EmployeeService.Common.Domain.Model;

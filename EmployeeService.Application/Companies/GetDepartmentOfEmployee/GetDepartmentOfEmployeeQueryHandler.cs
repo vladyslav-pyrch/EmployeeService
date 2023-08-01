@@ -6,7 +6,7 @@ using EmployeeService.Domain.Model.Companies;
 using EmployeeService.Domain.Model.Companies.Departments;
 using EmployeeService.Domain.Model.SharedKernel;
 
-namespace EmployeeService.Application.Companies.GetAllDepartmentsOfCompany;
+namespace EmployeeService.Application.Companies.GetDepartmentOfEmployee;
 
 public class GetDepartmentOfEmployeeQueryHandler : IQueryHandler<GetDepartmentOfEmployeeQuery, Department>
 {

@@ -1,4 +1,4 @@
-﻿namespace EmployeeService.Application.Companies.GetAllDepartmentsOfCompany;
+﻿namespace EmployeeService.Application.Companies.GetDepartmentOfEmployee;
 
 internal record DepartmentDto
 {

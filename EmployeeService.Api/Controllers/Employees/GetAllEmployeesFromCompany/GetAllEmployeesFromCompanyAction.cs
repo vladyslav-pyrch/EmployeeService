@@ -1,5 +1,5 @@
 ﻿using EmployeeService.Api.Contracts;
-using EmployeeService.Application.Companies.GetAllDepartmentsOfCompany;
+using EmployeeService.Application.Companies.GetDepartmentOfEmployee;
 using EmployeeService.Application.Employees.GetAllEmployeeOfCompany;
 using EmployeeService.Domain.Model.Companies;
 using EmployeeService.Domain.Model.Companies.Departments;
