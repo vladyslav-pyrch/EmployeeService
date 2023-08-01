@@ -4,129 +4,137 @@ namespace EmployeeService.Common.Domain.Model;
 
 public class DomainEventDispatcher : IDomainEventDispatcher
 {
-    private ConcurrentBag<IDomainEvent> _stagedEvents = new();
+	private readonly DomainEventSource _eventSource;
+	private ConcurrentBag<IDomainEvent> _stagedEvents = new();
 
-    private ConcurrentDictionary<Subscriber, object>? _subscribers;
+	private ConcurrentDictionary<Subscriber, object>? _subscribers;
 
-    private readonly DomainEventSource _eventSource;
+	public DomainEventDispatcher(DomainEventSource domainEventSource)
+	{
+		_eventSource = domainEventSource;
+		Publishing = false;
+	}
 
-    public DomainEventDispatcher(DomainEventSource domainEventSource)
-    {
-        _eventSource = domainEventSource;
-        Publishing = false;
-    }
+	private bool Publishing { get; set; }
 
-    private bool Publishing { get; set; }
+	private ConcurrentDictionary<Subscriber, object> Subscribers
+	{
+		get => _subscribers ??= new ConcurrentDictionary<Subscriber, object>();
+		set => _subscribers = value;
+	}
 
-    private ConcurrentDictionary<Subscriber, object> Subscribers
-    {
-        get => _subscribers ??= new ConcurrentDictionary<Subscriber, object>();
-        set => _subscribers = value;
-    }
+	public void Add<TDomainEvent>(TDomainEvent domainEvent) where TDomainEvent : IDomainEvent
+	{
+		_stagedEvents.Add(domainEvent);
+	}
 
-    public void Add<TDomainEvent>(TDomainEvent domainEvent) where TDomainEvent : IDomainEvent =>
-        _stagedEvents.Add(domainEvent);
+	public void Commit<TDomainEvent>() where TDomainEvent : IDomainEvent
+	{
+		IEnumerable<TDomainEvent> stagedEvents = from stagedEvent in _stagedEvents
+			where stagedEvent.GetType() == typeof(TDomainEvent)
+			select (TDomainEvent)stagedEvent;
 
-    public void Commit<TDomainEvent>() where TDomainEvent : IDomainEvent
-    {
-        IEnumerable<TDomainEvent> stagedEvents = from stagedEvent in _stagedEvents
-            where stagedEvent.GetType() == typeof(TDomainEvent)
-            select (TDomainEvent)stagedEvent;
+		foreach (TDomainEvent stagedEvent in stagedEvents)
+			Publish(stagedEvent);
 
-        foreach (var stagedEvent in stagedEvents)
-            Publish(stagedEvent);
+		ConcurrentBag<IDomainEvent> newBag = new();
+		Interlocked.Exchange(ref _stagedEvents, newBag);
+	}
 
-        ConcurrentBag<IDomainEvent> newBag = new();
-        Interlocked.Exchange(ref _stagedEvents, newBag);
-    }
+	public void Publish<TDomainEvent>(TDomainEvent domainEvent) where TDomainEvent : IDomainEvent
+	{
+		if (!HasSubscribers() || domainEvent is null)
+			return;
 
-    public void Publish<TDomainEvent>(TDomainEvent domainEvent) where TDomainEvent : IDomainEvent
-    {
-        if (!HasSubscribers() || domainEvent == null)
-            return;
-        
-        try
-        {
-            StartPublishing();
+		try
+		{
+			StartPublishing();
 
-            Type domainEventType = domainEvent.GetType();
-            IEnumerable<IDomainEventHandler<TDomainEvent>> subscribersToThisEvent = Subscribers
-                .Where(pair => IsSubscribedToEvent(domainEvent, pair, domainEventType))
-                .Select(pair => (IDomainEventHandler<TDomainEvent>)pair.Value);
+			Type domainEventType = domainEvent.GetType();
+			IEnumerable<IDomainEventHandler<TDomainEvent>> subscribersToThisEvent = Subscribers
+				.Where(pair => IsSubscribedToEvent(domainEvent, pair, domainEventType))
+				.Select(pair => (IDomainEventHandler<TDomainEvent>)pair.Value);
 
-            foreach (var subscriber in subscribersToThisEvent)
-                subscriber.Handle(domainEvent);
-        }
-        finally
-        {
-            _eventSource.Log(domainEvent);
+			foreach (IDomainEventHandler<TDomainEvent> subscriber in subscribersToThisEvent)
+				subscriber.Handle(domainEvent);
+		}
+		finally
+		{
+			_eventSource.Log(domainEvent);
 
-            StopPublishing();
-        }
-    }
+			StopPublishing();
+		}
+	}
 
-    public void Register<TDomainEvent>(IDomainEventHandler<TDomainEvent> subscriber) where TDomainEvent : IDomainEvent
-    {
-        if (!Publishing && !Registered(subscriber))
-            Subscribers.GetOrAdd(new Subscriber
-            {
-                SubscribedToType = typeof(TDomainEvent), SubscriberId = subscriber.SubscriberId
-            }, subscriber);
-    }
+	public void Register<TDomainEvent>(IDomainEventHandler<TDomainEvent> subscriber) where TDomainEvent : IDomainEvent
+	{
+		if (!Publishing && !Registered(subscriber))
+		{
+			Subscribers.GetOrAdd(new Subscriber
+			{
+				SubscribedToType = typeof(TDomainEvent), SubscriberId = subscriber.SubscriberId
+			}, subscriber);
+		}
+	}
 
-    public void Register<TDomainEvent>(Action<TDomainEvent> handle, Guid? subscriberId = null)
-        where TDomainEvent : IDomainEvent
-    {
-        IDomainEventHandler<TDomainEvent> subscriber = new DomainEventHandler<TDomainEvent>(handle, subscriberId);
-        
-        Register(subscriber);
-    }
+	public void Register<TDomainEvent>(Action<TDomainEvent> handle, Guid? subscriberId = null)
+		where TDomainEvent : IDomainEvent
+	{
+		IDomainEventHandler<TDomainEvent> subscriber = new DomainEventHandler<TDomainEvent>(handle, subscriberId);
 
-    private bool Registered<TDomainEvent>(IDomainEventHandler<TDomainEvent> subscriber)
-        where TDomainEvent : IDomainEvent => 
-        Subscribers.Any(pair => pair.Key.SubscribedToType == typeof(TDomainEvent) &&
-                                        pair.Key.SubscriberId == subscriber.SubscriberId);
+		Register(subscriber);
+	}
 
-    private static bool IsSubscribedToEvent<TDomainEvent>(TDomainEvent domainEvent,
-        KeyValuePair<Subscriber, object> pair, Type domainEventType)
-        where TDomainEvent : IDomainEvent
-    {
-        if (domainEvent.SubscriberId != null && domainEvent.SubscriberId != pair.Key.SubscriberId)
-            return false;
-        if (domainEventType == pair.Key.SubscribedToType)
-            return true;
-        if (domainEventType.IsSubclassOf(pair.Key.SubscribedToType))
-            return true;
+	private bool Registered<TDomainEvent>(IDomainEventHandler<TDomainEvent> subscriber)
+		where TDomainEvent : IDomainEvent
+	{
+		return Subscribers.Any(pair => pair.Key.SubscribedToType == typeof(TDomainEvent) &&
+		                               pair.Key.SubscriberId == subscriber.SubscriberId);
+	}
 
-        return pair.Key.SubscribedToType.IsInterface &&
-               domainEventType.GetInterfaces().Contains(pair.Key.SubscribedToType);
-    }
+	private static bool IsSubscribedToEvent<TDomainEvent>(TDomainEvent domainEvent,
+		KeyValuePair<Subscriber, object> pair, Type domainEventType)
+		where TDomainEvent : IDomainEvent
+	{
+		if (domainEvent.SubscriberId != null && domainEvent.SubscriberId != pair.Key.SubscriberId)
+			return false;
+		if (domainEventType == pair.Key.SubscribedToType)
+			return true;
+		if (domainEventType.IsSubclassOf(pair.Key.SubscribedToType))
+			return true;
 
-    private bool HasSubscribers() => !Subscribers.IsEmpty;
+		return pair.Key.SubscribedToType.IsInterface &&
+		       domainEventType.GetInterfaces().Contains(pair.Key.SubscribedToType);
+	}
 
-    private void StartPublishing() => Publishing = true;
+	private bool HasSubscribers() => !Subscribers.IsEmpty;
 
-    private void StopPublishing() => Publishing = false;
+	private void StartPublishing() => Publishing = true;
 
-    private struct Subscriber
-    {
-        public Guid? SubscriberId { get; set; }
-        
-        public Type SubscribedToType { get; set; } 
-    }
-    
-    private class DomainEventHandler<TDomainEvent> : IDomainEventHandler<TDomainEvent> where TDomainEvent : IDomainEvent
-    {
-        private readonly Action<TDomainEvent> _handle;
-        
-        public DomainEventHandler(Action<TDomainEvent> handle, Guid? subscriberId)
-        {
-            _handle += handle;
-            SubscriberId = subscriberId;
-        }
-        
-        public Guid? SubscriberId { get; }
-        
-        public void Handle(TDomainEvent domainEvent) => _handle(domainEvent);
-    }
+	private void StopPublishing() => Publishing = false;
+
+	private struct Subscriber
+	{
+		public Guid? SubscriberId { get; set; }
+
+		public Type SubscribedToType { get; set; }
+	}
+
+	private class DomainEventHandler<TDomainEvent> : IDomainEventHandler<TDomainEvent> where TDomainEvent : IDomainEvent
+	{
+		private readonly Action<TDomainEvent> _handle;
+
+		public DomainEventHandler(Action<TDomainEvent> handle, Guid? subscriberId)
+		{
+			_handle += handle;
+			SubscriberId = subscriberId;
+		}
+
+		public Guid? SubscriberId { get; }
+
+		public void Handle(TDomainEvent domainEvent)
+		{
+			_handle(domainEvent);
+		}
+	}
 }

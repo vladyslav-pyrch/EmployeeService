@@ -2,5 +2,5 @@
 
 public interface IRepository
 {
-    public void Save();
+	public void Save();
 }

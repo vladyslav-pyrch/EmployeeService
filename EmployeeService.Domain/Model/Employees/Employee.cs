@@ -6,142 +6,139 @@ namespace EmployeeService.Domain.Model.Employees;
 
 public class Employee : Entity<EmployeeId>
 {
-    private string _name = null!;
+	private string _name = null!;
 
-    private Passport _passport = null!;
+	private Passport _passport = null!;
 
-    private PhoneNumber _phoneNumber = null!;
+	private PhoneNumber _phoneNumber = null!;
 
-    private string _surname = null!;
+	private string _surname = null!;
 
-    private Workplace _workplace = null!;
+	private Workplace _workplace = null!;
 
-    public Employee(EmployeeId identity, string name, string surname, Passport passport, PhoneNumber phoneNumber,
-        Workplace workplace) : base(identity)
-    {
-        Name = name;
-        Surname = surname;
-        Passport = passport;
-        PhoneNumber = phoneNumber;
-        Workplace = workplace;
-    }
+	public Employee(EmployeeId identity, string name, string surname, Passport passport, PhoneNumber phoneNumber,
+		Workplace workplace) : base(identity)
+	{
+		Name = name;
+		Surname = surname;
+		Passport = passport;
+		PhoneNumber = phoneNumber;
+		Workplace = workplace;
+	}
 
-    public string Name
-    {
-        get => _name;
-        private set
-        {
-            ArgumentNullException.ThrowIfNull(value);
+	public string Name
+	{
+		get => _name;
+		private set
+		{
+			ArgumentNullException.ThrowIfNull(value);
 
-            if (!IsCapitalised(value))
-                throw new ArgumentException("Name should start from capital letter.");
+			if (!IsCapitalised(value))
+				throw new ArgumentException("Name should start from capital letter.");
 
-            if (HasSpaces(value))
-                throw new ArgumentException("Name should not have any spaces.");
+			if (HasSpaces(value))
+				throw new ArgumentException("Name should not have any spaces.");
 
-            _name = value;
-        }
-    }
-    
-    public string Surname
-    {
-        get => _surname;
-        private set
-        {
-            ArgumentNullException.ThrowIfNull(value);
+			_name = value;
+		}
+	}
 
-            if (!IsCapitalised(value))
-                throw new ArgumentException("Surname should start from capital letter.");
+	public string Surname
+	{
+		get => _surname;
+		private set
+		{
+			ArgumentNullException.ThrowIfNull(value);
 
-            if (HasSpaces(value))
-                throw new ArgumentException("Surname should not have any spaces.");
+			if (!IsCapitalised(value))
+				throw new ArgumentException("Surname should start from capital letter.");
 
-            _surname = value;
-        }
-    }
+			if (HasSpaces(value))
+				throw new ArgumentException("Surname should not have any spaces.");
 
-    public Passport Passport
-    {
-        get => _passport;
-        private set
-        {
-            ArgumentNullException.ThrowIfNull(value);
+			_surname = value;
+		}
+	}
 
-            _passport = value;
-        }
-    }
+	public Passport Passport
+	{
+		get => _passport;
+		private set
+		{
+			ArgumentNullException.ThrowIfNull(value);
 
-    public PhoneNumber PhoneNumber
-    {
-        get => _phoneNumber;
-        private set
-        {
-            ArgumentNullException.ThrowIfNull(value);
+			_passport = value;
+		}
+	}
 
-            _phoneNumber = value;
-        }
-    }
+	public PhoneNumber PhoneNumber
+	{
+		get => _phoneNumber;
+		private set
+		{
+			ArgumentNullException.ThrowIfNull(value);
 
-    public Workplace Workplace
-    {
-        get => _workplace;
-        private set
-        {
-            ArgumentNullException.ThrowIfNull(value);
+			_phoneNumber = value;
+		}
+	}
 
-            _workplace = value;
-        }
-    }
+	public Workplace Workplace
+	{
+		get => _workplace;
+		private set
+		{
+			ArgumentNullException.ThrowIfNull(value);
 
-    public void ChangeName(string name)
-    {
-        Name = name;
-        
-        AddDomainEvent(new EmployeesNameChanged(Source));
-    }
+			_workplace = value;
+		}
+	}
 
-    public void ChangeSurname(string surname)
-    {
-        Surname = surname;
-        
-        AddDomainEvent(new EmployeesSurnameChanged(Source));
-    }
+	public void ChangeName(string name)
+	{
+		Name = name;
 
-    public void ChangePassport(Passport passport)
-    {
-        Passport = passport;
-        
-        AddDomainEvent(new PassportChanged(Source));
-    }
+		AddDomainEvent(new EmployeesNameChanged(Source));
+	}
 
-    public void ChangePhoneNumber(PhoneNumber phoneNumber)
-    {
-        PhoneNumber = phoneNumber;
-        
-        AddDomainEvent(new EmployeesPhoneNumberChanged(Source));
-    }
+	public void ChangeSurname(string surname)
+	{
+		Surname = surname;
 
-    public void ChangeWorkplace(Workplace workplace)
-    {
-        Workplace = workplace;
-        
-        AddDomainEvent(new WorkplaceChanged(Source));
-    }
+		AddDomainEvent(new EmployeesSurnameChanged(Source));
+	}
 
-    public void ChangeDepartment(DepartmentId department)
-    {
-        Workplace = new Workplace(Workplace.Company, department);
-        
-        AddDomainEvent(new DepartmentChanged(Source));
-    }
+	public void ChangePassport(Passport passport)
+	{
+		Passport = passport;
 
-    private static bool IsCapitalised(string properNoun)
-    {
-        return char.IsUpper(properNoun[0]);
-    }
+		AddDomainEvent(new PassportChanged(Source));
+	}
 
-    private static bool HasSpaces(string word)
-    {
-        return word.Any(c => c == ' ');
-    }
+	public void ChangePhoneNumber(PhoneNumber phoneNumber)
+	{
+		PhoneNumber = phoneNumber;
+
+		AddDomainEvent(new EmployeesPhoneNumberChanged(Source));
+	}
+
+	public void ChangeWorkplace(Workplace workplace)
+	{
+		Workplace = workplace;
+
+		AddDomainEvent(new WorkplaceChanged(Source));
+	}
+
+	public void ChangeDepartment(DepartmentId department)
+	{
+		Workplace = new Workplace(Workplace.Company, department);
+
+		AddDomainEvent(new DepartmentChanged(Source));
+	}
+
+	private static bool IsCapitalised(string properNoun) => char.IsUpper(properNoun[0]);
+
+	private static bool HasSpaces(string word)
+	{
+		return word.Any(c => c == ' ');
+	}
 }

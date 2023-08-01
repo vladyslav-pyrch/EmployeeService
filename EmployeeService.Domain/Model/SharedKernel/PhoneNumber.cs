@@ -4,21 +4,18 @@ namespace EmployeeService.Domain.Model.SharedKernel;
 
 public record PhoneNumber : ValueObject
 {
-    private readonly string _number = null!;
+	private readonly string _number = null!;
 
-    public PhoneNumber(string number)
-    {
-        Number = number;
-    }
+	public PhoneNumber(string number) => Number = number;
 
-    public string Number
-    {
-        get => _number;
-        private init
-        {
-            ArgumentNullException.ThrowIfNull(value);
+	public string Number
+	{
+		get => _number;
+		private init
+		{
+			ArgumentNullException.ThrowIfNull(value);
 
-            _number = value;
-        }
-    }
+			_number = value;
+		}
+	}
 }

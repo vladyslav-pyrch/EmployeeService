@@ -7,15 +7,9 @@ namespace EmployeeService.Api.Controllers;
 [Controller]
 public abstract class ExtendedControllerBase : ControllerBase
 {
-    [NonAction]
-    public Uri DisplayUrl()
-    {
-        return new Uri(HttpContext.Request.GetDisplayUrl());
-    }
+	[NonAction]
+	public Uri DisplayUrl() => new(HttpContext.Request.GetDisplayUrl());
 
-    [NonAction]
-    public CreatedResult Created([ActionResultObjectValue] object? value)
-    {
-        return Created(DisplayUrl(), value);
-    }
+	[NonAction]
+	public CreatedResult Created([ActionResultObjectValue] object? value) => Created(DisplayUrl(), value);
 }

@@ -4,12 +4,9 @@ namespace EmployeeService.Domain.Model.Companies;
 
 public record CompanyId : Identity<int>
 {
-    public CompanyId(int id) : base(id)
-    {
-    }
+	public CompanyId(int id) : base(id)
+	{
+	}
 
-    public override int Deconvert()
-    {
-        return Convert.ToInt32(Id);
-    }
+	public override int Deconvert() => Convert.ToInt32(Id);
 }

@@ -4,5 +4,5 @@ namespace EmployeeService.Common.Application.Data;
 
 public interface ISqlConnectionFactory
 {
-    public IDbConnection OpenConnection { get; }   
+	public IDbConnection OpenConnection { get; }
 }

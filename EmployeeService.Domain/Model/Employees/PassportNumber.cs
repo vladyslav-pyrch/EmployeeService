@@ -4,21 +4,18 @@ namespace EmployeeService.Domain.Model.Employees;
 
 public record PassportNumber : ValueObject
 {
-    private readonly string _number = null!;
+	private readonly string _number = null!;
 
-    public PassportNumber(string number)
-    {
-        Number = number;
-    }
+	public PassportNumber(string number) => Number = number;
 
-    public string Number
-    {
-        get => _number;
-        private init
-        {
-            ArgumentNullException.ThrowIfNull(value);
+	public string Number
+	{
+		get => _number;
+		private init
+		{
+			ArgumentNullException.ThrowIfNull(value);
 
-            _number = value;
-        }
-    }
+			_number = value;
+		}
+	}
 }

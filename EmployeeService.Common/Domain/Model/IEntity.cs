@@ -2,5 +2,5 @@
 
 public interface IEntity<out TId> where TId : IIdentity
 {
-    public TId Identity { get; }
+	public TId Identity { get; }
 }
