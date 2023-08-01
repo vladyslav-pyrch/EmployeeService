@@ -35,8 +35,8 @@ where d.company_id = @CompanyId;";
     public List<Employee> Handle(GetAllEmployeeOfCompanyQuery query)
     {
         var connection = _sqlConnectionFactory.OpenConnection;
-
-        return connection.Query<EmployeeDto>(Sql, new { query.CompanyId })
+        
+        return connection.Query<EmployeeDto>(Sql, new { CompanyId = query.CompanyId.Deconvert() })
             .Select(ConvertToEmployee)
             .ToList();
     }
@@ -48,7 +48,7 @@ where d.company_id = @CompanyId;";
             new PassportNumber(dto.PassportNumber),
             new PassportType(dto.PassportType)
         );
-        var phoneNumber = new PhoneNumber(dto.PassportNumber);
+        var phoneNumber = new PhoneNumber(dto.PhoneNumber);
         var workplace = new Workplace(
             new CompanyId(dto.CompanyId),
             new DepartmentId(dto.DepartmentId)

@@ -1,3 +1,5 @@
+using EmployeeService.Application.Companies.GetAllDepartmentsOfCompany;
+using EmployeeService.Application.Employees.GetAllEmployeeOfCompany;
 using EmployeeService.Common.Application.Data;
 using EmployeeService.Common.Domain.Model;
 using EmployeeService.Infrastructure.DataAccess;
@@ -11,6 +13,8 @@ builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+builder.Services.AddScoped<GetDepartmentOfEmployeeQueryHandler>();
+builder.Services.AddScoped<GetAllEmployeeOfCompanyQueryHandler>();
 builder.Services.AddScoped<ISqlConnectionFactory, SqliteConnectionFactory>(provider =>
 {
     var connectionString = provider.GetRequiredService<IConfiguration>()

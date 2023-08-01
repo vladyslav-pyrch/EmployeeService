@@ -28,12 +28,6 @@ public class EmployeesController : ExtendedControllerBase
         return Ok();
     }
 
-    [HttpGet]
-    [ProducesResponseType(typeof(GetEmployeesFromDepartmentResponse),StatusCodes.Status200OK)]
-    public IActionResult GetEmployeesFromCompany(GetEmployeesFromCompanyRequest request)
-    {
-        throw new NotImplementedException();
-    }
 
     [HttpGet]
     [ProducesResponseType(typeof(GetEmployeesFromDepartmentResponse),StatusCodes.Status200OK)]

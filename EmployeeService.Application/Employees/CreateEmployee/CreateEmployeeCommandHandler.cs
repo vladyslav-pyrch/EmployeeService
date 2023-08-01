@@ -22,7 +22,7 @@ public class CreateEmployeeCommandHandler : ICommandHandler<CreateEmployeeComman
     {
         EmployeeId id = _identityFactory.GenerateId();
 
-        var (name, surname, passport, phoneNumber, workplace) = command.EmployeeDto;
+        var (name, surname, passport, phoneNumber, workplace) = command;
         
         var employee = new Employee(id, name, surname, passport, phoneNumber, workplace);
         
