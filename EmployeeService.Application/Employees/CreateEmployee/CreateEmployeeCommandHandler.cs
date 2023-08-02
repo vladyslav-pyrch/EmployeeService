@@ -1,4 +1,5 @@
-﻿using EmployeeService.Common.Application.Commands;
+﻿using EmployeeService.Application.Employees.GetNewEmployeeId;
+using EmployeeService.Common.Application.Commands;
 using EmployeeService.Common.Domain.Model;
 using EmployeeService.Domain.Model.Employees;
 using EmployeeService.Domain.Model.SharedKernel;
@@ -9,19 +10,22 @@ public class CreateEmployeeCommandHandler : ICommandHandler<CreateEmployeeComman
 {
 	private readonly IDomainEventDispatcher _domainEventDispatcher;
 	private readonly IEmployeeRepository _employeeRepository;
-	private readonly IIdentityFactory<EmployeeId> _identityFactory;
+	private readonly GetNewEmployeeIdQueryHandler _getNewEmployeeIdQueryHandler;
 
-	public CreateEmployeeCommandHandler(IIdentityFactory<EmployeeId> identityFactory,
-		IEmployeeRepository employeeRepository, IDomainEventDispatcher domainEventDispatcher)
+	public CreateEmployeeCommandHandler(IEmployeeRepository employeeRepository,
+		IDomainEventDispatcher domainEventDispatcher,
+		GetNewEmployeeIdQueryHandler getNewEmployeeIdQueryHandler)
 	{
-		_identityFactory = identityFactory;
 		_employeeRepository = employeeRepository;
 		_domainEventDispatcher = domainEventDispatcher;
+		_getNewEmployeeIdQueryHandler = getNewEmployeeIdQueryHandler;
 	}
 
 	public EmployeeId Handle(CreateEmployeeCommand command)
 	{
-		EmployeeId id = _identityFactory.GenerateId();
+		EmployeeId id = _getNewEmployeeIdQueryHandler.Handle(
+			new GetNewEmployeeIdQuery()
+		);
 
 		(string name, string surname, Passport passport, PhoneNumber phoneNumber, Workplace workplace) = command;
 

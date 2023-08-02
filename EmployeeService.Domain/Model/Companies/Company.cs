@@ -10,10 +10,10 @@ public class Company : Entity<CompanyId>
 
 	private string _name = null!;
 
-	public Company(CompanyId identity, string name, List<Department>? departments = null) : base(identity)
+	public Company(CompanyId identity, string name, List<Department> departments) : base(identity)
 	{
 		Name = name;
-		Departments = departments ?? new List<Department>();
+		Departments = departments;
 	}
 
 	public string Name
@@ -33,6 +33,9 @@ public class Company : Entity<CompanyId>
 		private set
 		{
 			ArgumentNullException.ThrowIfNull(value);
+
+			if (value.Count == 0)
+				throw new ArgumentException("A company should have at least one department.");
 
 			if (value.Any(department => department.CompanyId != Identity))
 				throw new ArgumentException("Some Departments' CompanyIds are not equal to Identity");

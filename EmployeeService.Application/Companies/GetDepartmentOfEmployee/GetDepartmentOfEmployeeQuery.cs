@@ -8,5 +8,5 @@ public class GetDepartmentOfEmployeeQuery : IQuery<Department>
 {
 	public GetDepartmentOfEmployeeQuery(EmployeeId employeeId) => EmployeeId = employeeId;
 
-	public EmployeeId EmployeeId { get; set; }
+	public EmployeeId EmployeeId { get; }
 }

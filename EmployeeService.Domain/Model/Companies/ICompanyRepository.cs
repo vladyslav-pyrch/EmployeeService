@@ -4,4 +4,5 @@ namespace EmployeeService.Domain.Model.Companies;
 
 public interface ICompanyRepository : IRepository
 {
+	public void CreateCompany(Company company);
 }

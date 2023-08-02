@@ -11,15 +11,15 @@ public class EmployeeServiceDbContext : DbContext
     {
     }
 
-    public DbSet<EmployeeModel> Employees { get; set; } = null!;
+    internal DbSet<EmployeeModel> Employees { get; set; } = null!;
 
-    public DbSet<CompanyModel> Companies { get; set; } = null!;
+    internal DbSet<CompanyModel> Companies { get; set; } = null!;
 
-    public DbSet<DepartmentModel> Departments { get; set; } = null!;
+    internal DbSet<DepartmentModel> Departments { get; set; } = null!;
 
-    public DbSet<PassportModel> Passports { get; set; } = null!;
+    internal DbSet<PassportModel> Passports { get; set; } = null!;
 
-    public DbSet<PassportTypeModel> PassportTypes { get; set; } = null!;
+    internal DbSet<PassportTypeModel> PassportTypes { get; set; } = null!;
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
