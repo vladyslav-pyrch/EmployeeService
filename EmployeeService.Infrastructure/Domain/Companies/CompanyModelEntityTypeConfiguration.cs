@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace EmployeeService.Infrastructure.Domain.Companies;
 
-public class CompanyModelEntityTypeConfiguration : IEntityTypeConfiguration<CompanyModel>
+internal class CompanyModelEntityTypeConfiguration : IEntityTypeConfiguration<CompanyModel>
 {
 	public void Configure(EntityTypeBuilder<CompanyModel> builder)
 	{

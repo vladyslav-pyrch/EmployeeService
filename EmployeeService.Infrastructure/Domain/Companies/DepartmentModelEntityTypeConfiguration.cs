@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace EmployeeService.Infrastructure.Domain.Companies;
 
-public class DepartmentModelEntityTypeConfiguration : IEntityTypeConfiguration<DepartmentModel>
+internal class DepartmentModelEntityTypeConfiguration : IEntityTypeConfiguration<DepartmentModel>
 {
 	public void Configure(EntityTypeBuilder<DepartmentModel> builder)
 	{

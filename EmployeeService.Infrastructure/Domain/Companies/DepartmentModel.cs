@@ -1,7 +1,15 @@
 ﻿namespace EmployeeService.Infrastructure.Domain.Companies;
 
-public class DepartmentModel
+internal class DepartmentModel
 {
+	public DepartmentModel(int id, string name, string phone, int companyId)
+	{
+		Id = id;
+		Name = name;
+		Phone = phone;
+		CompanyId = companyId;
+	}
+
 	public int Id { get; set; }
 
 	public string Name { get; set; }

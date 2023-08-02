@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace EmployeeService.Infrastructure.Domain.Employees;
 
-public class PassportModelEntityTypeConfiguration : IEntityTypeConfiguration<PassportModel>
+internal class PassportModelEntityTypeConfiguration : IEntityTypeConfiguration<PassportModel>
 {
 	public void Configure(EntityTypeBuilder<PassportModel> builder)
 	{

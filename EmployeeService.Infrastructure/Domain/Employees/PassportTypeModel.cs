@@ -1,7 +1,13 @@
 ﻿namespace EmployeeService.Infrastructure.Domain.Employees;
 
-public class PassportTypeModel
+internal class PassportTypeModel
 {
+	public PassportTypeModel(int id, string name)
+	{
+		Id = id;
+		Name = name;
+	}
+
 	public int Id { get; set; }
 
 	public string Name { get; set; }

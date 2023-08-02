@@ -1,7 +1,17 @@
 ﻿namespace EmployeeService.Infrastructure.Domain.Employees;
 
-public class EmployeeModel
+internal class EmployeeModel
 {
+	public EmployeeModel(int id, string name, string surname, string phone, int departmentId, int passportId)
+	{
+		Id = id;
+		Name = name;
+		Surname = surname;
+		Phone = phone;
+		DepartmentId = departmentId;
+		PassportId = passportId;
+	}
+
 	public int Id { get; set; }
 
 	public string Name { get; set; }
