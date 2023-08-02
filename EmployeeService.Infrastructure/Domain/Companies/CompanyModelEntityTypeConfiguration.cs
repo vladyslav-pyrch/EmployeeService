@@ -8,6 +8,8 @@ public class CompanyModelEntityTypeConfiguration : IEntityTypeConfiguration<Comp
 	public void Configure(EntityTypeBuilder<CompanyModel> builder)
 	{
 		builder.HasKey(company => company.Id);
+		builder.Property(company => company.Id)
+			.ValueGeneratedNever();
 		builder.Property(company => company.Name)
 			.HasMaxLength(50)
 			.IsRequired();

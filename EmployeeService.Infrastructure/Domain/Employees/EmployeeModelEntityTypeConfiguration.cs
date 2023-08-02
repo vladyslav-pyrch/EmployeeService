@@ -9,6 +9,8 @@ public class EmployeeModelEntityTypeConfiguration : IEntityTypeConfiguration<Emp
 	public void Configure(EntityTypeBuilder<EmployeeModel> builder)
 	{
 		builder.HasKey(employee => employee.Id);
+		builder.Property(employee => employee.Id)
+			.ValueGeneratedNever();
 		builder.Property(employee => employee.Name)
 			.HasMaxLength(50)
 			.IsRequired();

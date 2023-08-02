@@ -9,6 +9,8 @@ public class DepartmentModelEntityTypeConfiguration : IEntityTypeConfiguration<D
 	public void Configure(EntityTypeBuilder<DepartmentModel> builder)
 	{
 		builder.HasKey(department => department.Id);
+		builder.Property(department => department.Id)
+			.ValueGeneratedNever();
 		builder.Property(department => department.Name)
 			.HasMaxLength(50)
 			.IsRequired();
