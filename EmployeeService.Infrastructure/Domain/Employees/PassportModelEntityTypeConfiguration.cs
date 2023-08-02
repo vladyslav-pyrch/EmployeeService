@@ -8,6 +8,8 @@ internal class PassportModelEntityTypeConfiguration : IEntityTypeConfiguration<P
 	public void Configure(EntityTypeBuilder<PassportModel> builder)
 	{
 		builder.HasKey(passport => passport.Id);
+		builder.Property(passport => passport.Id)
+			.ValueGeneratedNever();
 		builder.Property(passport => passport.Number)
 			.HasMaxLength(50)
 			.IsRequired();

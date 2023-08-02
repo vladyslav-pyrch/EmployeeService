@@ -2,12 +2,20 @@ using EmployeeService.Application.Companies.CreateCompany;
 using EmployeeService.Application.Companies.GetDepartmentOfEmployee;
 using EmployeeService.Application.Companies.GetNewCompanyId;
 using EmployeeService.Application.Companies.GetNewDepartmentId;
+using EmployeeService.Application.Companies.IsThereCompany;
+using EmployeeService.Application.Companies.IsThereDepartment;
+using EmployeeService.Application.Companies.IsThereDepartmentInCompany;
+using EmployeeService.Application.Employees.CreateEmployee;
 using EmployeeService.Application.Employees.GetAllEmployeeOfCompany;
+using EmployeeService.Application.Employees.GetNewEmployeeId;
+using EmployeeService.Application.Employees.Rules;
 using EmployeeService.Common.Application.Data;
 using EmployeeService.Common.Domain.Model;
 using EmployeeService.Domain.Model.Companies;
+using EmployeeService.Domain.Model.Employees;
 using EmployeeService.Infrastructure.DataAccess;
 using EmployeeService.Infrastructure.Domain.Companies;
+using EmployeeService.Infrastructure.Domain.Employees;
 using Microsoft.EntityFrameworkCore;
 
 WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
@@ -23,8 +31,17 @@ builder.Services.AddScoped<GetDepartmentOfEmployeeQueryHandler>();
 builder.Services.AddScoped<GetAllEmployeeOfCompanyQueryHandler>();
 builder.Services.AddScoped<GetNewCompanyIdQueryHandler>();
 builder.Services.AddScoped<GetNewDepartmentIdQueryHandler>();
+builder.Services.AddScoped<GetNewEmployeeIdQueryHandler>();
+builder.Services.AddScoped<IsThereDepartmentInCompanyQueryHandler>();
+builder.Services.AddScoped<IsThereDepartmentQueryHandler>();
+builder.Services.AddScoped<IsThereCompanyQueryHandler>();
 
 builder.Services.AddScoped<CreateCompanyCommandHandler>();
+builder.Services.AddScoped<CreateEmployeeCommandHandler>();
+
+builder.Services.AddScoped<DepartmentShouldBeInCompanyRule>();
+builder.Services.AddScoped<DepartmentShouldExistRule>();
+builder.Services.AddScoped<CompanyShouldExistRule>();
 
 builder.Services.AddScoped<ISqlConnectionFactory, SqliteConnectionFactory>(provider =>
 {
@@ -40,6 +57,7 @@ builder.Services.AddDbContext<EmployeeServiceDbContext>(optionsBuilder =>
 	).UseSnakeCaseNamingConvention();
 });
 builder.Services.AddScoped<ICompanyRepository, CompanyRepository>();
+builder.Services.AddScoped<IEmployeeRepository, EmployeeRepository>();
 
 builder.Services.AddScoped<IDomainEventDispatcher, DomainEventDispatcher>();
 builder.Services.AddScoped<DomainEventSource>();
