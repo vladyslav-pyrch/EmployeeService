@@ -14,17 +14,18 @@ public class CompanyRepository : ICompanyRepository
 
 	public void CreateCompany(Company company)
 	{
-		var companyModel = new CompanyModel(company.Identity.Deconvert(), company.Name);
+		var companyModel = new CompanyModel{ Id = company.Identity.Deconvert(), Name = company.Name };
 
-		_dbContext.Companies.Add(companyModel);
+	_dbContext.Companies.Add(companyModel);
 
 		IEnumerable<DepartmentModel> departmentModels = company.Departments.Select(department =>
-			new DepartmentModel(
-				department.Identity.Deconvert(),
-				department.Name,
-				department.PhoneNumber.Number,
-				department.CompanyId.Deconvert()
-			)
+			new DepartmentModel
+			{
+				Id = department.Identity.Deconvert(),
+				Name = department.Name,
+				Phone = department.PhoneNumber.Number,
+				CompanyId = department.CompanyId.Deconvert()
+			}
 		);
 		
 		_dbContext.AddRange(departmentModels);
