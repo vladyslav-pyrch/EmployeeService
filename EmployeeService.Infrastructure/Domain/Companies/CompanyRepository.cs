@@ -1,5 +1,4 @@
 ﻿using EmployeeService.Domain.Model.Companies;
-using EmployeeService.Domain.Model.Companies.Departments;
 using EmployeeService.Infrastructure.DataAccess;
 
 namespace EmployeeService.Infrastructure.Domain.Companies;
@@ -19,15 +18,16 @@ public class CompanyRepository : ICompanyRepository
 
 		_dbContext.Companies.Add(companyModel);
 
-		foreach (Department department in company.Departments)
-		{
-			_dbContext.Departments.Add(new DepartmentModel(
+		IEnumerable<DepartmentModel> departmentModels = company.Departments.Select(department =>
+			new DepartmentModel(
 				department.Identity.Deconvert(),
 				department.Name,
 				department.PhoneNumber.Number,
 				department.CompanyId.Deconvert()
-			));
-		}
+			)
+		);
+		
+		_dbContext.AddRange(departmentModels);
 	}
 	
 	public void Save() => _dbContext.SaveChanges();

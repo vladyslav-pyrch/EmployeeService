@@ -1,5 +1,6 @@
 ﻿using System.Data;
 using Dapper;
+using EmployeeService.Application.Companies.IsThereCompany;
 using EmployeeService.Common.Application.Data;
 using EmployeeService.Common.Application.Queries;
 using EmployeeService.Domain.Model.Companies;
@@ -28,11 +29,19 @@ where d.company_id = @CompanyId;";
 
 	private readonly ISqlConnectionFactory _sqlConnectionFactory;
 
-	public GetAllEmployeeOfCompanyQueryHandler(ISqlConnectionFactory sqlConnectionFactory) =>
+	private readonly IsThereCompanyQueryHandler _isThereCompanyQueryHandler;
+
+	public GetAllEmployeeOfCompanyQueryHandler(ISqlConnectionFactory sqlConnectionFactory, 
+		IsThereCompanyQueryHandler isThereCompanyQueryHandler)
+	{
 		_sqlConnectionFactory = sqlConnectionFactory;
+		_isThereCompanyQueryHandler = isThereCompanyQueryHandler;
+	}
 
 	public List<Employee> Handle(GetAllEmployeeOfCompanyQuery query)
 	{
+		CheckQuery(query);
+		
 		IDbConnection connection = _sqlConnectionFactory.OpenConnection;
 
 		return connection.Query<EmployeeDto>(Sql, new { CompanyId = query.CompanyId.Deconvert() })
@@ -54,5 +63,13 @@ where d.company_id = @CompanyId;";
 		);
 
 		return new Employee(id, dto.Name, dto.Surname, passport, phoneNumber, workplace);
+	}
+
+	private void CheckQuery(GetAllEmployeeOfCompanyQuery query)
+	{
+		var isThereCompanyQuery = new IsThereCompanyQuery(query.CompanyId);
+
+		if (!_isThereCompanyQueryHandler.Handle(isThereCompanyQuery))
+			throw new InvalidOperationException("There is no such company");
 	}
 }

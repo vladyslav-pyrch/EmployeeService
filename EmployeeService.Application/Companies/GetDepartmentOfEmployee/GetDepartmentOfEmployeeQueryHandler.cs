@@ -1,5 +1,6 @@
 ﻿using System.Data;
 using Dapper;
+using EmployeeService.Application.Employees.IsThereEmployee;
 using EmployeeService.Common.Application.Data;
 using EmployeeService.Common.Application.Queries;
 using EmployeeService.Domain.Model.Companies;
@@ -21,8 +22,14 @@ where e.id = @EmployeeId;";
 
 	private readonly ISqlConnectionFactory _sqlConnectionFactory;
 
-	public GetDepartmentOfEmployeeQueryHandler(ISqlConnectionFactory sqlConnectionFactory) =>
+	private readonly IsThereEmployeeQueryHandler _isThereEmployeeQueryHandler;
+
+	public GetDepartmentOfEmployeeQueryHandler(ISqlConnectionFactory sqlConnectionFactory,
+		IsThereEmployeeQueryHandler isThereEmployeeQueryHandler)
+	{
 		_sqlConnectionFactory = sqlConnectionFactory;
+		_isThereEmployeeQueryHandler = isThereEmployeeQueryHandler;
+	}
 
 	public Department Handle(GetDepartmentOfEmployeeQuery query)
 	{
@@ -34,7 +41,15 @@ where e.id = @EmployeeId;";
 		return ConvertToDepartment(departmentDto);
 	}
 
-	private Department ConvertToDepartment(DepartmentDto departmentDto)
+	private void CheckQuery(GetDepartmentOfEmployeeQuery query)
+	{
+		var isThereEmployeeQuery = new IsThereEmployeeQuery(query.EmployeeId);
+
+		if (!_isThereEmployeeQueryHandler.Handle(isThereEmployeeQuery))
+			throw new InvalidOperationException("There is no such employee");
+	}
+
+	private static Department ConvertToDepartment(DepartmentDto departmentDto)
 	{
 		var id = new DepartmentId(departmentDto.Id);
 		string name = departmentDto.Name;

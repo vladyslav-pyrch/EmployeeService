@@ -8,7 +8,7 @@ using EmployeeService.Application.Companies.IsThereDepartmentInCompany;
 using EmployeeService.Application.Employees.CreateEmployee;
 using EmployeeService.Application.Employees.GetAllEmployeeOfCompany;
 using EmployeeService.Application.Employees.GetNewEmployeeId;
-using EmployeeService.Application.Employees.Rules;
+using EmployeeService.Application.Employees.IsThereEmployee;
 using EmployeeService.Common.Application.Data;
 using EmployeeService.Common.Domain.Model;
 using EmployeeService.Domain.Model.Companies;
@@ -35,13 +35,10 @@ builder.Services.AddScoped<GetNewEmployeeIdQueryHandler>();
 builder.Services.AddScoped<IsThereDepartmentInCompanyQueryHandler>();
 builder.Services.AddScoped<IsThereDepartmentQueryHandler>();
 builder.Services.AddScoped<IsThereCompanyQueryHandler>();
+builder.Services.AddScoped<IsThereEmployeeQueryHandler>();
 
 builder.Services.AddScoped<CreateCompanyCommandHandler>();
 builder.Services.AddScoped<CreateEmployeeCommandHandler>();
-
-builder.Services.AddScoped<DepartmentShouldBeInCompanyRule>();
-builder.Services.AddScoped<DepartmentShouldExistRule>();
-builder.Services.AddScoped<CompanyShouldExistRule>();
 
 builder.Services.AddScoped<ISqlConnectionFactory, SqliteConnectionFactory>(provider =>
 {

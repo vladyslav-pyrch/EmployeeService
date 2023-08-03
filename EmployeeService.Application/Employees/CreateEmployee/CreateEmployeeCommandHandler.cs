@@ -1,5 +1,7 @@
-﻿using EmployeeService.Application.Employees.GetNewEmployeeId;
-using EmployeeService.Application.Employees.Rules;
+﻿using EmployeeService.Application.Companies.IsThereCompany;
+using EmployeeService.Application.Companies.IsThereDepartment;
+using EmployeeService.Application.Companies.IsThereDepartmentInCompany;
+using EmployeeService.Application.Employees.GetNewEmployeeId;
 using EmployeeService.Common.Application.Commands;
 using EmployeeService.Common.Domain.Model;
 using EmployeeService.Domain.Model.Employees;
@@ -15,46 +17,68 @@ public class CreateEmployeeCommandHandler : ICommandHandler<CreateEmployeeComman
 	
 	private readonly GetNewEmployeeIdQueryHandler _getNewEmployeeIdQueryHandler;
 
-	private readonly DepartmentShouldBeInCompanyRule _departmentShouldBeInCompanyRule;
+	private readonly IsThereCompanyQueryHandler _isThereCompanyQueryHandler;
 
-	private readonly DepartmentShouldExistRule _departmentShouldExistRule;
+	private readonly IsThereDepartmentQueryHandler _isThereDepartmentQueryHandler;
 
-	private readonly CompanyShouldExistRule _companyShouldExistRule;
+	private readonly IsThereDepartmentInCompanyQueryHandler _isThereDepartmentInCompanyQueryHandler;
 
 	public CreateEmployeeCommandHandler(IEmployeeRepository employeeRepository,
 		IDomainEventDispatcher domainEventDispatcher,
 		GetNewEmployeeIdQueryHandler getNewEmployeeIdQueryHandler,
-		DepartmentShouldBeInCompanyRule departmentShouldBeInCompanyRule,
-		DepartmentShouldExistRule departmentShouldExistRule,
-		CompanyShouldExistRule companyShouldExistRule)
+		IsThereCompanyQueryHandler isThereCompanyQueryHandler,
+		IsThereDepartmentQueryHandler isThereDepartmentQueryHandler,
+		IsThereDepartmentInCompanyQueryHandler isThereDepartmentInCompanyQueryHandler)
 	{
 		_employeeRepository = employeeRepository;
 		_domainEventDispatcher = domainEventDispatcher;
 		_getNewEmployeeIdQueryHandler = getNewEmployeeIdQueryHandler;
-		_departmentShouldBeInCompanyRule = departmentShouldBeInCompanyRule;
-		_departmentShouldExistRule = departmentShouldExistRule;
-		_companyShouldExistRule = companyShouldExistRule;
+		_isThereCompanyQueryHandler = isThereCompanyQueryHandler;
+		_isThereDepartmentQueryHandler = isThereDepartmentQueryHandler;
+		_isThereDepartmentInCompanyQueryHandler = isThereDepartmentInCompanyQueryHandler;
 	}
 
 	public EmployeeId Handle(CreateEmployeeCommand command)
 	{
+		CheckCommand(command);
+		
 		EmployeeId id = _getNewEmployeeIdQueryHandler.Handle(
 			new GetNewEmployeeIdQuery()
 		);
 
 		(string name, string surname, Passport passport, PhoneNumber phoneNumber, Workplace workplace) = command;
-
+		
 		var employee = new Employee(id, name, surname, passport, phoneNumber, workplace);
 		
-		_companyShouldExistRule.Check(employee);
-		_departmentShouldExistRule.Check(employee);
-		_departmentShouldBeInCompanyRule.Check(employee);
-
 		_employeeRepository.AddEmployee(employee);
 		_employeeRepository.Save();
 
 		_domainEventDispatcher.Publish(new EmployeeCreated(nameof(Employee)));
 
 		return id;
+	}
+
+	private void CheckCommand(CreateEmployeeCommand command)
+	{
+		var isThereCompanyQuery = new IsThereCompanyQuery(command.Workplace.Company);
+		var isThereDepartmentQuery = new IsThereDepartmentQuery(command.Workplace.Department);
+		var isThereDepartmentInCompanyQuery = new IsThereDepartmentInCompanyQuery(
+			command.Workplace.Company, command.Workplace.Department
+		);
+		
+		if (!_isThereCompanyQueryHandler.Handle(isThereCompanyQuery))
+			throw new InvalidOperationException(
+				"There is no such company with such id"
+			);
+
+		if (!_isThereDepartmentQueryHandler.Handle(isThereDepartmentQuery))
+			throw new InvalidOperationException(
+				"There is no such department"
+			);
+
+		if (!_isThereDepartmentInCompanyQueryHandler.Handle(isThereDepartmentInCompanyQuery))
+			throw new InvalidOperationException(
+				"There is no such department in the company"
+			);
 	}
 }
