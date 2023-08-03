@@ -3,6 +3,7 @@ using Dapper;
 using EmployeeService.Common.Application.Data;
 using EmployeeService.Domain.Model.Employees;
 using EmployeeService.Infrastructure.DataAccess;
+using Microsoft.EntityFrameworkCore;
 
 namespace EmployeeService.Infrastructure.Domain.Employees;
 
@@ -28,21 +29,28 @@ public class EmployeeRepository : IEmployeeRepository
 		
 		CreatePassport(out int passportId, employee.Passport.Number.Number, passportTypeId);
 
-		var employeeModel = new EmployeeModel(
-			employee.Identity.Deconvert(),
-			employee.Name,
-			employee.Surname,
-			employee.PhoneNumber.Number,
-			employee.Workplace.Department.Deconvert(),
-			passportId
-		);
+		var employeeModel = new EmployeeModel
+		{
+			Id = employee.Identity.Deconvert(),
+			Name = employee.Name,
+			Surname = employee.Surname,
+			Phone = employee.PhoneNumber.Number,
+			DepartmentId = employee.Workplace.Department.Deconvert(),
+			PassportId = passportId
+		};
 
 		_dbContext.Employees.Add(employeeModel);
 	}
 
 	public void DeleteById(EmployeeId employeeId)
 	{
-		throw new NotImplementedException();
+		int id = employeeId.Deconvert();
+
+		var employeeModelToRemove = new EmployeeModel{ Id = id };
+
+		_dbContext.Employees.Attach(employeeModelToRemove);
+
+		_dbContext.Employees.Remove(employeeModelToRemove);
 	}
 
 	public void Save() => _dbContext.SaveChanges();
@@ -50,8 +58,11 @@ public class EmployeeRepository : IEmployeeRepository
 	private void CreatePassportType(string name)
 	{
 		int id = GetNewPassportTypeId();
-		
-		var passportTypeModel = new PassportTypeModel(id, name);
+
+		var passportTypeModel = new PassportTypeModel
+		{
+			Id = id, Name = name
+		};
 
 		 _dbContext.PassportTypes.Add(passportTypeModel);
 	}
@@ -60,7 +71,10 @@ public class EmployeeRepository : IEmployeeRepository
 	{
 		id = GetNewPassportId();
 
-		var passportModel = new PassportModel(id, number, passportTypeId);
+		var passportModel = new PassportModel
+		{
+			Id = id, Number = number, PassportTypeId = passportTypeId
+		};
 
 		_dbContext.Passports.Add(passportModel);
 	}

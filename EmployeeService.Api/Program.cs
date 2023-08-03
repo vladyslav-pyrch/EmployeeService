@@ -6,6 +6,7 @@ using EmployeeService.Application.Companies.IsThereCompany;
 using EmployeeService.Application.Companies.IsThereDepartment;
 using EmployeeService.Application.Companies.IsThereDepartmentInCompany;
 using EmployeeService.Application.Employees.CreateEmployee;
+using EmployeeService.Application.Employees.DeleteEmployee;
 using EmployeeService.Application.Employees.GetAllEmployeeOfCompany;
 using EmployeeService.Application.Employees.GetNewEmployeeId;
 using EmployeeService.Application.Employees.IsThereEmployee;
@@ -39,6 +40,7 @@ builder.Services.AddScoped<IsThereEmployeeQueryHandler>();
 
 builder.Services.AddScoped<CreateCompanyCommandHandler>();
 builder.Services.AddScoped<CreateEmployeeCommandHandler>();
+builder.Services.AddScoped<DeleteEmployeeCommandHandler>();
 
 builder.Services.AddScoped<ISqlConnectionFactory, SqliteConnectionFactory>(provider =>
 {
