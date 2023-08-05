@@ -8,6 +8,7 @@ using EmployeeService.Application.Companies.IsThereDepartmentInCompany;
 using EmployeeService.Application.Employees.CreateEmployee;
 using EmployeeService.Application.Employees.DeleteEmployee;
 using EmployeeService.Application.Employees.GetAllEmployeeOfCompany;
+using EmployeeService.Application.Employees.GetAllEmployeesFromDepartment;
 using EmployeeService.Application.Employees.GetNewEmployeeId;
 using EmployeeService.Application.Employees.IsThereEmployee;
 using EmployeeService.Common.Application.Data;
@@ -30,6 +31,7 @@ builder.Services.AddSwaggerGen();
 
 builder.Services.AddScoped<GetDepartmentOfEmployeeQueryHandler>();
 builder.Services.AddScoped<GetAllEmployeeOfCompanyQueryHandler>();
+builder.Services.AddScoped<GetAllEmployeesFromDepartmentQueryHandler>();
 builder.Services.AddScoped<GetNewCompanyIdQueryHandler>();
 builder.Services.AddScoped<GetNewDepartmentIdQueryHandler>();
 builder.Services.AddScoped<GetNewEmployeeIdQueryHandler>();

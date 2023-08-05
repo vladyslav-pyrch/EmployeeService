@@ -45,24 +45,8 @@ where d.company_id = @CompanyId;";
 		IDbConnection connection = _sqlConnectionFactory.OpenConnection;
 
 		return connection.Query<EmployeeDto>(Sql, new { CompanyId = query.CompanyId.Deconvert() })
-			.Select(ConvertToEmployee)
+			.Select(dto => (Employee)dto)
 			.ToList();
-	}
-
-	private static Employee ConvertToEmployee(EmployeeDto dto)
-	{
-		var id = new EmployeeId(dto.Id);
-		var passport = new Passport(
-			new PassportNumber(dto.PassportNumber),
-			new PassportType(dto.PassportType)
-		);
-		var phoneNumber = new PhoneNumber(dto.PhoneNumber);
-		var workplace = new Workplace(
-			new CompanyId(dto.CompanyId),
-			new DepartmentId(dto.DepartmentId)
-		);
-
-		return new Employee(id, dto.Name, dto.Surname, passport, phoneNumber, workplace);
 	}
 
 	private void CheckQuery(GetAllEmployeeOfCompanyQuery query)

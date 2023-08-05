@@ -35,10 +35,12 @@ where e.id = @EmployeeId;";
 	{
 		IDbConnection connection = _sqlConnectionFactory.OpenConnection;
 
-		var departmentDto =
-			connection.QuerySingle<DepartmentDto>(Sql, new { EmployeeId = query.EmployeeId.Deconvert() });
+		var departmentDto = connection.QuerySingle<DepartmentDto>(Sql, new
+		{
+			EmployeeId = query.EmployeeId.Deconvert()
+		});
 
-		return ConvertToDepartment(departmentDto);
+		return (Department)departmentDto;
 	}
 
 	private void CheckQuery(GetDepartmentOfEmployeeQuery query)
@@ -47,15 +49,5 @@ where e.id = @EmployeeId;";
 
 		if (!_isThereEmployeeQueryHandler.Handle(isThereEmployeeQuery))
 			throw new InvalidOperationException("There is no such employee");
-	}
-
-	private static Department ConvertToDepartment(DepartmentDto departmentDto)
-	{
-		var id = new DepartmentId(departmentDto.Id);
-		string name = departmentDto.Name;
-		var phoneNumber = new PhoneNumber(departmentDto.PhoneNumber);
-		var companyId = new CompanyId(departmentDto.CompanyId);
-
-		return new Department(id, name, phoneNumber, companyId);
 	}
 }
