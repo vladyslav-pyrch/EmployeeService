@@ -40,7 +40,7 @@ where e.id = @EmployeeId;";
 			EmployeeId = query.EmployeeId.Deconvert()
 		});
 
-		return (Department)departmentDto;
+		return Convert.ToDepartment(departmentDto);
 	}
 
 	private void CheckQuery(GetDepartmentOfEmployeeQuery query)

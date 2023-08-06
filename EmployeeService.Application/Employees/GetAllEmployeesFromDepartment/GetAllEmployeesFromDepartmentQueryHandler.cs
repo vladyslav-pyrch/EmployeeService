@@ -3,10 +3,7 @@ using Dapper;
 using EmployeeService.Application.Companies.IsThereDepartment;
 using EmployeeService.Common.Application.Data;
 using EmployeeService.Common.Application.Queries;
-using EmployeeService.Domain.Model.Companies;
-using EmployeeService.Domain.Model.Companies.Departments;
 using EmployeeService.Domain.Model.Employees;
-using EmployeeService.Domain.Model.SharedKernel;
 
 namespace EmployeeService.Application.Employees.GetAllEmployeesFromDepartment;
 
@@ -46,7 +43,7 @@ where d.id = @DepartmentId;";
 		IDbConnection connection = _sqlConnectionFactory.OpenConnection;
 
 		return connection.Query<EmployeeDto>(Sql, new { DepartmentId = query.DepartmentId.Deconvert() })
-			.Select(dto => (Employee)dto)
+			.Select(Convert.ToEmployee)
 			.ToList();
 	}
 

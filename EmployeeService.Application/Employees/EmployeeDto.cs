@@ -1,9 +1,4 @@
-﻿using EmployeeService.Domain.Model.Companies;
-using EmployeeService.Domain.Model.Companies.Departments;
-using EmployeeService.Domain.Model.Employees;
-using EmployeeService.Domain.Model.SharedKernel;
-
-namespace EmployeeService.Application.Employees;
+﻿namespace EmployeeService.Application.Employees;
 
 internal record EmployeeDto
 {
@@ -22,22 +17,4 @@ internal record EmployeeDto
 	public int DepartmentId { get; set; }
 
 	public int CompanyId { get; set; }
-
-	public static explicit operator Employee(EmployeeDto employeeDto)
-	{
-		var id = new EmployeeId(employeeDto.Id);
-		string name = employeeDto.Name;
-		string surname = employeeDto.Surname;
-		var passport = new Passport(
-			new PassportNumber(employeeDto.PassportNumber),
-			new PassportType(employeeDto.PassportType)
-		);
-		var phoneNumber = new PhoneNumber(employeeDto.PhoneNumber);
-		var workplace = new Workplace(
-			new CompanyId(employeeDto.CompanyId),
-			new DepartmentId(employeeDto.DepartmentId)
-		);
-
-		return new Employee(id, name, surname, passport, phoneNumber, workplace);
-	}
 }
