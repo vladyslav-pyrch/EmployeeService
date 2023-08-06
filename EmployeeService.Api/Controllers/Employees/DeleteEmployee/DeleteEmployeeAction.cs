@@ -9,10 +9,8 @@ public class DeleteEmployeeAction : ExtendedControllerBase
 {
 	private readonly DeleteEmployeeCommandHandler _deleteEmployeeCommandHandler;
 
-	public DeleteEmployeeAction(DeleteEmployeeCommandHandler deleteEmployeeCommandHandler)
-	{
+	public DeleteEmployeeAction(DeleteEmployeeCommandHandler deleteEmployeeCommandHandler) =>
 		_deleteEmployeeCommandHandler = deleteEmployeeCommandHandler;
-	}
 
 	[HttpDelete("api/Employee/Delete")]
 	[ProducesResponseType(StatusCodes.Status400BadRequest)]
@@ -25,7 +23,7 @@ public class DeleteEmployeeAction : ExtendedControllerBase
 		var deleteEmployeeQuery = new DeleteEmployeeCommand(
 			Guid.NewGuid(), new EmployeeId(request.EmployeeId.Value)
 		);
-		
+
 		_deleteEmployeeCommandHandler.Handle(deleteEmployeeQuery);
 
 		return Ok();

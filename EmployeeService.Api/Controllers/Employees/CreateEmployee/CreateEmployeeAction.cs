@@ -12,10 +12,8 @@ public class CreateEmployeeAction : ExtendedControllerBase
 {
 	private readonly CreateEmployeeCommandHandler _createEmployeeCommandHandler;
 
-	public CreateEmployeeAction(CreateEmployeeCommandHandler createEmployeeCommandHandler)
-	{
+	public CreateEmployeeAction(CreateEmployeeCommandHandler createEmployeeCommandHandler) =>
 		_createEmployeeCommandHandler = createEmployeeCommandHandler;
-	}
 
 	[HttpPost("api/Employee/CreateEmployee")]
 	[ProducesResponseType(StatusCodes.Status400BadRequest)]
@@ -27,7 +25,7 @@ public class CreateEmployeeAction : ExtendedControllerBase
 
 		EmployeeId employeeId = _createEmployeeCommandHandler.Handle(
 			MadeCreateEmployeeCommand(request)
-		);//todo Handle BusinessRuleExceptions!!! 
+		); //todo Handle BusinessRuleExceptions!!! 
 
 		return Created(
 			new CreateEmployeeResponse(employeeId.Deconvert())

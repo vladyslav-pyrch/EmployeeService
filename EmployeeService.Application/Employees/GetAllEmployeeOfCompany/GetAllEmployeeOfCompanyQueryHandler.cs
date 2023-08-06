@@ -24,11 +24,11 @@ from departments d
     left join passport_types pt on pt.id = p.passport_type_id
 where d.company_id = @CompanyId;";
 
-	private readonly ISqlConnectionFactory _sqlConnectionFactory;
-
 	private readonly IsThereCompanyQueryHandler _isThereCompanyQueryHandler;
 
-	public GetAllEmployeeOfCompanyQueryHandler(ISqlConnectionFactory sqlConnectionFactory, 
+	private readonly ISqlConnectionFactory _sqlConnectionFactory;
+
+	public GetAllEmployeeOfCompanyQueryHandler(ISqlConnectionFactory sqlConnectionFactory,
 		IsThereCompanyQueryHandler isThereCompanyQueryHandler)
 	{
 		_sqlConnectionFactory = sqlConnectionFactory;
@@ -38,7 +38,7 @@ where d.company_id = @CompanyId;";
 	public List<Employee> Handle(GetAllEmployeeOfCompanyQuery query)
 	{
 		CheckQuery(query);
-		
+
 		IDbConnection connection = _sqlConnectionFactory.OpenConnection;
 
 		return connection.Query<EmployeeDto>(Sql, new { CompanyId = query.CompanyId.Deconvert() })

@@ -9,10 +9,8 @@ public class CreateCompanyAction : ExtendedControllerBase
 {
 	private readonly CreateCompanyCommandHandler _createCompanyCommandHandler;
 
-	public CreateCompanyAction(CreateCompanyCommandHandler createCompanyCommandHandler)
-	{
+	public CreateCompanyAction(CreateCompanyCommandHandler createCompanyCommandHandler) =>
 		_createCompanyCommandHandler = createCompanyCommandHandler;
-	}
 
 	[HttpPost("api/Company/CreateCompany")]
 	[ProducesResponseType(StatusCodes.Status400BadRequest)]

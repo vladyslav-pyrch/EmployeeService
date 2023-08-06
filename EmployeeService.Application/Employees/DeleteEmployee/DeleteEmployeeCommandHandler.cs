@@ -23,9 +23,9 @@ public class DeleteEmployeeCommandHandler : ICommandHandler<DeleteEmployeeComman
 	public void Handle(DeleteEmployeeCommand command)
 	{
 		CheckCommand(command);
-		
+
 		_employeeRepository.DeleteById(command.EmployeeId);
-		
+
 		_employeeRepository.Save();
 
 		_domainEventDispatcher.Publish(new EmployeeDeleted(nameof(Employee)));

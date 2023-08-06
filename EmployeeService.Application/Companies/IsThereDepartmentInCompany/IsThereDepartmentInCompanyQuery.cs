@@ -11,8 +11,8 @@ public class IsThereDepartmentInCompanyQuery : IQuery<bool>
 		CompanyId = companyId;
 		DepartmentId = departmentId;
 	}
-	
+
 	public CompanyId CompanyId { get; }
-	
+
 	public DepartmentId DepartmentId { get; }
 }

@@ -7,7 +7,8 @@ using EmployeeService.Domain.Model.Employees;
 
 namespace EmployeeService.Application.Employees.GetAllEmployeesFromDepartment;
 
-public class GetAllEmployeesFromDepartmentQueryHandler : IQueryHandler<GetAllEmployeesFromDepartmentQuery, List<Employee>>
+public class
+	GetAllEmployeesFromDepartmentQueryHandler : IQueryHandler<GetAllEmployeesFromDepartmentQuery, List<Employee>>
 {
 	private const string Sql = @"
 select
@@ -25,9 +26,9 @@ from departments d
     left join passport_types pt on pt.id = p.passport_type_id
 where d.id = @DepartmentId;";
 
-	private readonly ISqlConnectionFactory _sqlConnectionFactory;
-	
 	private readonly IsThereDepartmentQueryHandler _isThereDepartmentQueryHandler;
+
+	private readonly ISqlConnectionFactory _sqlConnectionFactory;
 
 	public GetAllEmployeesFromDepartmentQueryHandler(IsThereDepartmentQueryHandler isThereDepartmentQueryHandler,
 		ISqlConnectionFactory sqlConnectionFactory)

@@ -12,16 +12,16 @@ namespace EmployeeService.Application.Employees.CreateEmployee;
 public class CreateEmployeeCommandHandler : ICommandHandler<CreateEmployeeCommand, EmployeeId>
 {
 	private readonly IDomainEventDispatcher _domainEventDispatcher;
-	
+
 	private readonly IEmployeeRepository _employeeRepository;
-	
+
 	private readonly GetNewEmployeeIdQueryHandler _getNewEmployeeIdQueryHandler;
 
 	private readonly IsThereCompanyQueryHandler _isThereCompanyQueryHandler;
 
-	private readonly IsThereDepartmentQueryHandler _isThereDepartmentQueryHandler;
-
 	private readonly IsThereDepartmentInCompanyQueryHandler _isThereDepartmentInCompanyQueryHandler;
+
+	private readonly IsThereDepartmentQueryHandler _isThereDepartmentQueryHandler;
 
 	public CreateEmployeeCommandHandler(IEmployeeRepository employeeRepository,
 		IDomainEventDispatcher domainEventDispatcher,
@@ -41,15 +41,15 @@ public class CreateEmployeeCommandHandler : ICommandHandler<CreateEmployeeComman
 	public EmployeeId Handle(CreateEmployeeCommand command)
 	{
 		CheckCommand(command);
-		
+
 		EmployeeId id = _getNewEmployeeIdQueryHandler.Handle(
 			new GetNewEmployeeIdQuery()
 		);
 
 		(string name, string surname, Passport passport, PhoneNumber phoneNumber, Workplace workplace) = command;
-		
+
 		var employee = new Employee(id, name, surname, passport, phoneNumber, workplace);
-		
+
 		_employeeRepository.AddEmployee(employee);
 		_employeeRepository.Save();
 
@@ -65,20 +65,26 @@ public class CreateEmployeeCommandHandler : ICommandHandler<CreateEmployeeComman
 		var isThereDepartmentInCompanyQuery = new IsThereDepartmentInCompanyQuery(
 			command.Workplace.Company, command.Workplace.Department
 		);
-		
+
 		if (!_isThereCompanyQueryHandler.Handle(isThereCompanyQuery))
+		{
 			throw new InvalidOperationException(
 				"There is no such company with such id"
 			);
+		}
 
 		if (!_isThereDepartmentQueryHandler.Handle(isThereDepartmentQuery))
+		{
 			throw new InvalidOperationException(
 				"There is no such department"
 			);
+		}
 
 		if (!_isThereDepartmentInCompanyQueryHandler.Handle(isThereDepartmentInCompanyQuery))
+		{
 			throw new InvalidOperationException(
 				"There is no such department in the company"
 			);
+		}
 	}
 }

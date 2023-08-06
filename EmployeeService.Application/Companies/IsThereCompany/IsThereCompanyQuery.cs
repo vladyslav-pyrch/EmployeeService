@@ -5,10 +5,7 @@ namespace EmployeeService.Application.Companies.IsThereCompany;
 
 public class IsThereCompanyQuery : IQuery<bool>
 {
-	public IsThereCompanyQuery(CompanyId companyId)
-	{
-		CompanyId = companyId;
-	}
+	public IsThereCompanyQuery(CompanyId companyId) => CompanyId = companyId;
 
 	public CompanyId CompanyId { get; }
 }

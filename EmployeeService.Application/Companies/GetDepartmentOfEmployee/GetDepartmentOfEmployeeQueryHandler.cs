@@ -3,9 +3,7 @@ using Dapper;
 using EmployeeService.Application.Employees.IsThereEmployee;
 using EmployeeService.Common.Application.Data;
 using EmployeeService.Common.Application.Queries;
-using EmployeeService.Domain.Model.Companies;
 using EmployeeService.Domain.Model.Companies.Departments;
-using EmployeeService.Domain.Model.SharedKernel;
 
 namespace EmployeeService.Application.Companies.GetDepartmentOfEmployee;
 
@@ -20,9 +18,9 @@ from employees e
     left join departments d on d.id = e.department_id
 where e.id = @EmployeeId;";
 
-	private readonly ISqlConnectionFactory _sqlConnectionFactory;
-
 	private readonly IsThereEmployeeQueryHandler _isThereEmployeeQueryHandler;
+
+	private readonly ISqlConnectionFactory _sqlConnectionFactory;
 
 	public GetDepartmentOfEmployeeQueryHandler(ISqlConnectionFactory sqlConnectionFactory,
 		IsThereEmployeeQueryHandler isThereEmployeeQueryHandler)

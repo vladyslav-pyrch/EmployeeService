@@ -20,7 +20,7 @@ where d.id = @DepartmentId;";
 
 	public IsThereDepartmentInCompanyQueryHandler(ISqlConnectionFactory sqlConnectionFactory) =>
 		_sqlConnectionFactory = sqlConnectionFactory;
-	
+
 	public bool Handle(IsThereDepartmentInCompanyQuery query)
 	{
 		IDbConnection connection = _sqlConnectionFactory.OpenConnection;

@@ -3,7 +3,6 @@ using Dapper;
 using EmployeeService.Common.Application.Data;
 using EmployeeService.Domain.Model.Employees;
 using EmployeeService.Infrastructure.DataAccess;
-using Microsoft.EntityFrameworkCore;
 
 namespace EmployeeService.Infrastructure.Domain.Employees;
 
@@ -26,7 +25,7 @@ public class EmployeeRepository : IEmployeeRepository
 			CreatePassportType(employee.Passport.Type.Name);
 
 		int passportTypeId = GetPassportTypeId(employee.Passport.Type.Name);
-		
+
 		CreatePassport(out int passportId, employee.Passport.Number.Number, passportTypeId);
 
 		var employeeModel = new EmployeeModel
@@ -46,7 +45,7 @@ public class EmployeeRepository : IEmployeeRepository
 	{
 		int id = employeeId.Deconvert();
 
-		var employeeModelToRemove = new EmployeeModel{ Id = id };
+		var employeeModelToRemove = new EmployeeModel { Id = id };
 
 		_dbContext.Employees.Attach(employeeModelToRemove);
 
@@ -54,7 +53,7 @@ public class EmployeeRepository : IEmployeeRepository
 	}
 
 	public void Save() => _dbContext.SaveChanges();
-	
+
 	private void CreatePassportType(string name)
 	{
 		int id = GetNewPassportTypeId();
@@ -64,7 +63,7 @@ public class EmployeeRepository : IEmployeeRepository
 			Id = id, Name = name
 		};
 
-		 _dbContext.PassportTypes.Add(passportTypeModel);
+		_dbContext.PassportTypes.Add(passportTypeModel);
 	}
 
 	private void CreatePassport(out int id, string number, int passportTypeId)
@@ -90,7 +89,7 @@ select
     end IsThere";
 
 		IDbConnection connection = _sqlConnectionFactory.OpenConnection;
-		
+
 		return connection.QuerySingle<bool>(sql, new { Name = name });
 	}
 
@@ -103,7 +102,7 @@ from passport_types t left outer join
         on t.id = t2.id - 1 cross join 
     (select min(id) as minid from passport_types t) const
 where t2.id is null;";
-		
+
 		IDbConnection connection = _sqlConnectionFactory.OpenConnection;
 
 		return connection.QuerySingle<int>(sql);
@@ -120,7 +119,7 @@ from passports t left outer join
 where t2.id is null;";
 
 		IDbConnection connection = _sqlConnectionFactory.OpenConnection;
-		
+
 		return connection.QuerySingle<int>(sql);
 	}
 
@@ -131,7 +130,7 @@ select
     pt.id
 from passport_types pt
 where pt.name = @Name;";
-		
+
 		IDbConnection connection = _sqlConnectionFactory.OpenConnection;
 
 		return connection.QuerySingle<int>(sql, new { Name = name });

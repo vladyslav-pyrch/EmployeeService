@@ -52,7 +52,7 @@ public class CreateCompanyCommandHandler : ICommandHandler<CreateCompanyCommand,
 
 		_companyRepository.CreateCompany(company);
 		_companyRepository.Save();
-		
+
 		_domainEventDispatcher.Publish(new CompanyCreated(nameof(Company)));
 
 		return companyId;

@@ -19,10 +19,8 @@ where t2.id is null;
 
 	private readonly ISqlConnectionFactory _sqlConnectionFactory;
 
-	public GetNewEmployeeIdQueryHandler(ISqlConnectionFactory sqlConnectionFactory)
-	{
+	public GetNewEmployeeIdQueryHandler(ISqlConnectionFactory sqlConnectionFactory) =>
 		_sqlConnectionFactory = sqlConnectionFactory;
-	}
 
 	public EmployeeId Handle(GetNewEmployeeIdQuery query)
 	{

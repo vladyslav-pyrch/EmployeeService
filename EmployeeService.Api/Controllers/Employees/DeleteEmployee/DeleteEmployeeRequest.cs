@@ -5,5 +5,5 @@ namespace EmployeeService.Api.Controllers.Employees.DeleteEmployee;
 
 public class DeleteEmployeeRequest
 {
-	[Required, NotNull] public int? EmployeeId { get; set; }
+	[Required] [NotNull] public int? EmployeeId { get; set; }
 }

@@ -26,7 +26,7 @@ internal static class Convert
 
 		return new Employee(id, name, surname, passport, phoneNumber, workplace);
 	}
-	
+
 	public static Department ToDepartment(DepartmentDto departmentDto)
 	{
 		var id = new DepartmentId(departmentDto.Id);

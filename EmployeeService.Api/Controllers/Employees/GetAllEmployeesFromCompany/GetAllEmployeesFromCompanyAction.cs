@@ -1,8 +1,6 @@
 ﻿using EmployeeService.Api.Contracts;
-using EmployeeService.Application.Companies.GetDepartmentOfEmployee;
 using EmployeeService.Application.Employees.GetAllEmployeeOfCompany;
 using EmployeeService.Domain.Model.Companies;
-using EmployeeService.Domain.Model.Companies.Departments;
 using EmployeeService.Domain.Model.Employees;
 using Microsoft.AspNetCore.Mvc;
 
@@ -13,10 +11,8 @@ public class GetAllEmployeesFromCompanyAction : ExtendedControllerBase
 {
 	private readonly GetAllEmployeeOfCompanyQueryHandler _getAllEmployeeOfCompanyQueryHandler;
 
-	public GetAllEmployeesFromCompanyAction(GetAllEmployeeOfCompanyQueryHandler getAllEmployeeOfCompanyQueryHandler)
-	{
+	public GetAllEmployeesFromCompanyAction(GetAllEmployeeOfCompanyQueryHandler getAllEmployeeOfCompanyQueryHandler) =>
 		_getAllEmployeeOfCompanyQueryHandler = getAllEmployeeOfCompanyQueryHandler;
-	}
 
 	[HttpGet("api/Employee/GetAllEmployeesFromCompany")]
 	[ProducesResponseType(StatusCodes.Status400BadRequest)]

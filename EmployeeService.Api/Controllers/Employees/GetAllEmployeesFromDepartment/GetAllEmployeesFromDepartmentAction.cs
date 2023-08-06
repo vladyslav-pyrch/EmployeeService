@@ -1,5 +1,4 @@
 ﻿using EmployeeService.Api.Contracts;
-using EmployeeService.Application.Companies.GetDepartmentOfEmployee;
 using EmployeeService.Application.Employees.GetAllEmployeesFromDepartment;
 using EmployeeService.Domain.Model.Companies.Departments;
 using EmployeeService.Domain.Model.Employees;
@@ -12,10 +11,8 @@ public class GetAllEmployeesFromDepartmentAction : ExtendedControllerBase
 	private readonly GetAllEmployeesFromDepartmentQueryHandler _getAllEmployeesFromDepartmentQueryHandler;
 
 	public GetAllEmployeesFromDepartmentAction(
-		GetAllEmployeesFromDepartmentQueryHandler getAllEmployeesFromDepartmentQueryHandler)
-	{
+		GetAllEmployeesFromDepartmentQueryHandler getAllEmployeesFromDepartmentQueryHandler) =>
 		_getAllEmployeesFromDepartmentQueryHandler = getAllEmployeesFromDepartmentQueryHandler;
-	}
 
 	[HttpGet("api/Employee/GetAllEmployeeFromDepartment")]
 	[ProducesResponseType(typeof(GetAllEmployeesFromDepartmentResponse), StatusCodes.Status200OK)]

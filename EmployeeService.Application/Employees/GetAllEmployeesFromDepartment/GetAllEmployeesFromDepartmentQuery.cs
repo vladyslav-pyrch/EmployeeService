@@ -6,10 +6,7 @@ namespace EmployeeService.Application.Employees.GetAllEmployeesFromDepartment;
 
 public class GetAllEmployeesFromDepartmentQuery : IQuery<List<Employee>>
 {
-	public GetAllEmployeesFromDepartmentQuery(DepartmentId departmentId)
-	{
-		DepartmentId = departmentId;
-	}
+	public GetAllEmployeesFromDepartmentQuery(DepartmentId departmentId) => DepartmentId = departmentId;
 
 	public DepartmentId DepartmentId { get; }
 }

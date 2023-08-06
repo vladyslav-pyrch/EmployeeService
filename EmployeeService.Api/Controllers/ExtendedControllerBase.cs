@@ -16,16 +16,16 @@ public abstract class ExtendedControllerBase : ControllerBase
 
 	[NonAction]
 	protected CreatedResult Created([ActionResultObjectValue] object? value) => Created(DisplayUrl(), value);
-	
+
 	protected EmployeeDto GetEmployeeDto(Employee employee)
 	{
 		var getDepartmentOfEmployeeQuery = new GetDepartmentOfEmployeeQuery(
 			employee.Identity
 		);
-		
+
 		var getDepartmentOfEmployeeQueryHandler = HttpContext.RequestServices
 			.GetRequiredService<GetDepartmentOfEmployeeQueryHandler>();
-		
+
 		Department department = getDepartmentOfEmployeeQueryHandler.Handle(
 			getDepartmentOfEmployeeQuery
 		);

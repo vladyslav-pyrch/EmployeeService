@@ -5,5 +5,5 @@ namespace EmployeeService.Api.Controllers.Employees.GetAllEmployeesFromCompany;
 
 public record GetAllEmployeesFromCompanyRequest
 {
-	[Required, NotNull] public int? CompanyId { get; set; }
+	[Required] [NotNull] public int? CompanyId { get; set; }
 }

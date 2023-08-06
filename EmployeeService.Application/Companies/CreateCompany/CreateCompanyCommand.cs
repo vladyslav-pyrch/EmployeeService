@@ -10,8 +10,8 @@ public class CreateCompanyCommand : Command<CompanyId>
 		Name = name;
 		PhoneNumber = phoneNumber;
 	}
-	
+
 	public string Name { get; }
-	
+
 	public string PhoneNumber { get; }
 }

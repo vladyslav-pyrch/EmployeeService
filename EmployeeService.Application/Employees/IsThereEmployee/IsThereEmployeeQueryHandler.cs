@@ -17,10 +17,8 @@ select
 
 	private readonly ISqlConnectionFactory _sqlConnectionFactory;
 
-	public IsThereEmployeeQueryHandler(ISqlConnectionFactory sqlConnectionFactory)
-	{
+	public IsThereEmployeeQueryHandler(ISqlConnectionFactory sqlConnectionFactory) =>
 		_sqlConnectionFactory = sqlConnectionFactory;
-	}
 
 	public bool Handle(IsThereEmployeeQuery query)
 	{
