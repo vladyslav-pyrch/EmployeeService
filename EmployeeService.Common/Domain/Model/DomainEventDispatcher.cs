@@ -30,8 +30,10 @@ public class DomainEventDispatcher : IDomainEventDispatcher
 
 	public void Commit<TDomainEvent>() where TDomainEvent : IDomainEvent
 	{
+		Type domainEventType = typeof(TDomainEvent);
+		
 		IEnumerable<TDomainEvent> stagedEvents = from stagedEvent in _stagedEvents
-			where stagedEvent.GetType() == typeof(TDomainEvent)
+			where stagedEvent is TDomainEvent
 			select (TDomainEvent)stagedEvent;
 
 		foreach (TDomainEvent stagedEvent in stagedEvents)

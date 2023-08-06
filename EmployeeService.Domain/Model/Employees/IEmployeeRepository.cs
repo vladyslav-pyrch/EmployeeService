@@ -7,4 +7,6 @@ public interface IEmployeeRepository : IRepository
 	public void AddEmployee(Employee employee);
 
 	public void DeleteById(EmployeeId employeeId);
+	
+	public void UpdateEmployee(Employee employee);
 }

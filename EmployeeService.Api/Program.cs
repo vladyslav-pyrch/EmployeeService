@@ -9,8 +9,12 @@ using EmployeeService.Application.Employees.CreateEmployee;
 using EmployeeService.Application.Employees.DeleteEmployee;
 using EmployeeService.Application.Employees.GetAllEmployeeOfCompany;
 using EmployeeService.Application.Employees.GetAllEmployeesFromDepartment;
+using EmployeeService.Application.Employees.GetEmployeeById;
 using EmployeeService.Application.Employees.GetNewEmployeeId;
+using EmployeeService.Application.Employees.GetPassportByEmployeeId;
+using EmployeeService.Application.Employees.GetWorkplaceByEmployeeId;
 using EmployeeService.Application.Employees.IsThereEmployee;
+using EmployeeService.Application.Employees.UpdateEmployee;
 using EmployeeService.Common.Application.Data;
 using EmployeeService.Common.Domain.Model;
 using EmployeeService.Domain.Model.Companies;
@@ -32,6 +36,9 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddScoped<GetDepartmentOfEmployeeQueryHandler>();
 builder.Services.AddScoped<GetAllEmployeeOfCompanyQueryHandler>();
 builder.Services.AddScoped<GetAllEmployeesFromDepartmentQueryHandler>();
+builder.Services.AddScoped<GetEmployeeByIdQueryHandler>();
+builder.Services.AddScoped<GetWorkplaceByEmployeeIdQueryHandler>();
+builder.Services.AddScoped<GetPassportByEmployeeIdQueryHandler>();
 builder.Services.AddScoped<GetNewCompanyIdQueryHandler>();
 builder.Services.AddScoped<GetNewDepartmentIdQueryHandler>();
 builder.Services.AddScoped<GetNewEmployeeIdQueryHandler>();
@@ -43,6 +50,7 @@ builder.Services.AddScoped<IsThereEmployeeQueryHandler>();
 builder.Services.AddScoped<CreateCompanyCommandHandler>();
 builder.Services.AddScoped<CreateEmployeeCommandHandler>();
 builder.Services.AddScoped<DeleteEmployeeCommandHandler>();
+builder.Services.AddScoped<UpdateEmployeeCommandHandler>();
 
 builder.Services.AddScoped<ISqlConnectionFactory, SqliteConnectionFactory>(provider =>
 {

@@ -36,4 +36,20 @@ internal static class Convert
 
 		return new Department(id, name, phoneNumber, companyId);
 	}
+
+	public static Workplace ToWorkplace(WorkplaceDto workplaceDto)
+	{
+		var companyId = new CompanyId(workplaceDto.CompanyId);
+		var departmentId = new DepartmentId(workplaceDto.DepartmentId);
+
+		return new Workplace(companyId, departmentId);
+	}
+
+	public static Passport ToPassport(PassportDto passportDto)
+	{
+		var passportNumber = new PassportNumber(passportDto.Number);
+		var passportType = new PassportType(passportDto.Type);
+
+		return new Passport(passportNumber, passportType);
+	}
 }
