@@ -1,4 +1,5 @@
 ﻿using EmployeeService.Domain.Model.Companies;
+using EmployeeService.Domain.Model.Companies.Departments;
 using EmployeeService.Infrastructure.DataAccess;
 
 namespace EmployeeService.Infrastructure.Domain.Companies;
@@ -32,11 +33,22 @@ public class CompanyRepository : ICompanyRepository
 	{
 		int id = companyId.Deconvert();
 		
-		var companyModelToRemove = new CompanyModel{ Id = id };
+		var companyModelToRemove = new CompanyModel { Id = id };
 
 		_dbContext.Companies.Attach(companyModelToRemove);
 
 		_dbContext.Companies.Remove(companyModelToRemove);
+	}
+
+	public void DeleteDepartmentById(DepartmentId departmentId)
+	{
+		int id = departmentId.Deconvert();
+
+		var departmentModelToRemove = new DepartmentModel { Id = id };
+
+		_dbContext.Departments.Attach(departmentModelToRemove);
+
+		_dbContext.Departments.Remove(departmentModelToRemove);
 	}
 
 	public void Save() => _dbContext.SaveChanges();

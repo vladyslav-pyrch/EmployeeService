@@ -33,9 +33,9 @@ public class DeleteCompanyCommandHandler : ICommandHandler<DeleteCompanyCommand>
 		_domainEventDispatcher.Publish(new CompanyDeleted(nameof(Company)));
 	}
 
-	private void CheckCommand(DeleteCompanyCommand query)
+	private void CheckCommand(DeleteCompanyCommand command)
 	{
-		var isThereCompanyQuery = new IsThereCompanyQuery(query.CompanyId);
+		var isThereCompanyQuery = new IsThereCompanyQuery(command.CompanyId);
 
 		if (!_isThereCompanyQueryHandler.Handle(isThereCompanyQuery))
 			throw new InvalidOperationException("There is no such company");
