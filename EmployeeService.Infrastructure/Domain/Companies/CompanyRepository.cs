@@ -28,5 +28,16 @@ public class CompanyRepository : ICompanyRepository
 		_dbContext.Departments.AddRange(departmentModels);
 	}
 
+	public void DeleteCompanyById(CompanyId companyId)
+	{
+		int id = companyId.Deconvert();
+		
+		var companyModelToRemove = new CompanyModel{ Id = id };
+
+		_dbContext.Companies.Attach(companyModelToRemove);
+
+		_dbContext.Companies.Remove(companyModelToRemove);
+	}
+
 	public void Save() => _dbContext.SaveChanges();
 }

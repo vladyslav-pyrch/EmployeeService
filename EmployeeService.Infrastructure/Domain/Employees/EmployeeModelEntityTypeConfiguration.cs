@@ -29,6 +29,6 @@ internal class EmployeeModelEntityTypeConfiguration : IEntityTypeConfiguration<E
 			.WithMany()
 			.HasForeignKey(employee => employee.DepartmentId)
 			.IsRequired()
-			.OnDelete(DeleteBehavior.NoAction);
+			.OnDelete(DeleteBehavior.Cascade);
 	}
 }

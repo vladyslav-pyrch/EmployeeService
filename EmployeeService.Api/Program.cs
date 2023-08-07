@@ -1,4 +1,5 @@
 using EmployeeService.Application.Companies.CreateCompany;
+using EmployeeService.Application.Companies.DeleteCompany;
 using EmployeeService.Application.Companies.GetDepartmentOfEmployee;
 using EmployeeService.Application.Companies.GetNewCompanyId;
 using EmployeeService.Application.Companies.GetNewDepartmentId;
@@ -48,6 +49,7 @@ builder.Services.AddScoped<IsThereCompanyQueryHandler>();
 builder.Services.AddScoped<IsThereEmployeeQueryHandler>();
 
 builder.Services.AddScoped<CreateCompanyCommandHandler>();
+builder.Services.AddScoped<DeleteCompanyCommandHandler>();
 builder.Services.AddScoped<CreateEmployeeCommandHandler>();
 builder.Services.AddScoped<DeleteEmployeeCommandHandler>();
 builder.Services.AddScoped<UpdateEmployeeCommandHandler>();

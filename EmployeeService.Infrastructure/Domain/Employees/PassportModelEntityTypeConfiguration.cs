@@ -22,6 +22,6 @@ internal class PassportModelEntityTypeConfiguration : IEntityTypeConfiguration<P
 			.WithOne()
 			.HasForeignKey<EmployeeModel>(employee => employee.PassportId)
 			.IsRequired()
-			.OnDelete(DeleteBehavior.ClientCascade); // Not sure about it.
+			.OnDelete(DeleteBehavior.Cascade); // Not sure about it.
 	}
 }

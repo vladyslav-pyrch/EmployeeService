@@ -25,6 +25,6 @@ internal class DepartmentModelEntityTypeConfiguration : IEntityTypeConfiguration
 			.WithMany()
 			.HasForeignKey(department => department.CompanyId)
 			.IsRequired()
-			.OnDelete(DeleteBehavior.NoAction);
+			.OnDelete(DeleteBehavior.Cascade);
 	}
 }
