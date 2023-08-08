@@ -9,10 +9,10 @@ namespace EmployeeService.Api.Controllers.Employees.GetAllEmployeesFromCompany;
 [ApiController]
 public class GetAllEmployeesFromCompanyAction : ExtendedControllerBase
 {
-	private readonly GetAllEmployeeOfCompanyQueryHandler _getAllEmployeeOfCompanyQueryHandler;
+	private readonly GetAllEmployeesOfCompanyQueryHandler _getAllEmployeesOfCompanyQueryHandler;
 
-	public GetAllEmployeesFromCompanyAction(GetAllEmployeeOfCompanyQueryHandler getAllEmployeeOfCompanyQueryHandler) =>
-		_getAllEmployeeOfCompanyQueryHandler = getAllEmployeeOfCompanyQueryHandler;
+	public GetAllEmployeesFromCompanyAction(GetAllEmployeesOfCompanyQueryHandler getAllEmployeesOfCompanyQueryHandler) =>
+		_getAllEmployeesOfCompanyQueryHandler = getAllEmployeesOfCompanyQueryHandler;
 
 	[HttpGet("api/Employee/GetAllEmployeesFromCompany")]
 	[ProducesResponseType(StatusCodes.Status400BadRequest)]
@@ -22,11 +22,11 @@ public class GetAllEmployeesFromCompanyAction : ExtendedControllerBase
 		if (!ModelState.IsValid)
 			return BadRequest(ModelState);
 
-		var getAllEmployeesOfCompanyQuery = new GetAllEmployeeOfCompanyQuery(
+		var getAllEmployeesOfCompanyQuery = new GetAllEmployeesOfCompanyQuery(
 			new CompanyId(request.CompanyId!.Value)
 		);
 
-		List<Employee> employees = _getAllEmployeeOfCompanyQueryHandler.Handle(
+		List<Employee> employees = _getAllEmployeesOfCompanyQueryHandler.Handle(
 			getAllEmployeesOfCompanyQuery
 		);
 

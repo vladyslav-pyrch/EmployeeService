@@ -4,9 +4,9 @@ using EmployeeService.Domain.Model.Employees;
 
 namespace EmployeeService.Application.Employees.GetAllEmployeeOfCompany;
 
-public class GetAllEmployeeOfCompanyQuery : IQuery<List<Employee>>
+public class GetAllEmployeesOfCompanyQuery : IQuery<List<Employee>>
 {
-	public GetAllEmployeeOfCompanyQuery(CompanyId companyId) => CompanyId = companyId;
+	public GetAllEmployeesOfCompanyQuery(CompanyId companyId) => CompanyId = companyId;
 
 	public CompanyId CompanyId { get; }
 }

@@ -7,7 +7,7 @@ using EmployeeService.Domain.Model.Employees;
 
 namespace EmployeeService.Application.Employees.GetAllEmployeeOfCompany;
 
-public class GetAllEmployeeOfCompanyQueryHandler : IQueryHandler<GetAllEmployeeOfCompanyQuery, List<Employee>>
+public class GetAllEmployeesOfCompanyQueryHandler : IQueryHandler<GetAllEmployeesOfCompanyQuery, List<Employee>>
 {
 	private const string Sql = @"select
     e.id as Id,
@@ -28,14 +28,14 @@ where d.company_id = @CompanyId;";
 
 	private readonly ISqlConnectionFactory _sqlConnectionFactory;
 
-	public GetAllEmployeeOfCompanyQueryHandler(ISqlConnectionFactory sqlConnectionFactory,
+	public GetAllEmployeesOfCompanyQueryHandler(ISqlConnectionFactory sqlConnectionFactory,
 		IsThereCompanyQueryHandler isThereCompanyQueryHandler)
 	{
 		_sqlConnectionFactory = sqlConnectionFactory;
 		_isThereCompanyQueryHandler = isThereCompanyQueryHandler;
 	}
 
-	public List<Employee> Handle(GetAllEmployeeOfCompanyQuery query)
+	public List<Employee> Handle(GetAllEmployeesOfCompanyQuery query)
 	{
 		CheckQuery(query);
 
@@ -46,7 +46,7 @@ where d.company_id = @CompanyId;";
 			.ToList();
 	}
 
-	private void CheckQuery(GetAllEmployeeOfCompanyQuery query)
+	private void CheckQuery(GetAllEmployeesOfCompanyQuery query)
 	{
 		var isThereCompanyQuery = new IsThereCompanyQuery(query.CompanyId);
 

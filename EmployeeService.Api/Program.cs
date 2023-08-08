@@ -36,7 +36,7 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 builder.Services.AddScoped<GetDepartmentOfEmployeeQueryHandler>();
-builder.Services.AddScoped<GetAllEmployeeOfCompanyQueryHandler>();
+builder.Services.AddScoped<GetAllEmployeesOfCompanyQueryHandler>();
 builder.Services.AddScoped<GetAllEmployeesFromDepartmentQueryHandler>();
 builder.Services.AddScoped<GetEmployeeByIdQueryHandler>();
 builder.Services.AddScoped<GetWorkplaceByEmployeeIdQueryHandler>();
