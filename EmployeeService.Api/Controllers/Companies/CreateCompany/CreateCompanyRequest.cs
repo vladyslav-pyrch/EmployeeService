@@ -5,7 +5,14 @@ namespace EmployeeService.Api.Controllers.Companies.CreateCompany;
 
 public record CreateCompanyRequest
 {
-	[Required] [NotNull] public string? Name { get; set; }
+	[Required]
+	[NotNull]
+	[StringLength(50)]
+	public string? Name { get; set; }
 
-	[Required] [NotNull] public string? PhoneNumber { get; set; }
+	[Required]
+	[NotNull]
+	[Phone]
+	[StringLength(15)]
+	public string? PhoneNumber { get; set; }
 }

@@ -5,5 +5,7 @@ namespace EmployeeService.Api.Controllers.Employees.GetAllEmployeesFromDepartmen
 
 public record GetAllEmployeesFromDepartmentRequest
 {
-	[Required] [NotNull] public int? DepartmentId { get; set; }
+	[Required]
+	[NotNull]
+	public int? DepartmentId { get; set; }
 }

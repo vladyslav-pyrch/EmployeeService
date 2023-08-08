@@ -8,10 +8,8 @@ public class DeleteDepartmentAction : ExtendedControllerBase
 {
 	private readonly DeleteDepartmentCommandHandler _deleteDepartmentCommandHandler;
 
-	public DeleteDepartmentAction(DeleteDepartmentCommandHandler deleteDepartmentCommandHandler)
-	{
+	public DeleteDepartmentAction(DeleteDepartmentCommandHandler deleteDepartmentCommandHandler) =>
 		_deleteDepartmentCommandHandler = deleteDepartmentCommandHandler;
-	}
 
 	[HttpDelete("api/Department/DeleteDepartment")]
 	[ProducesResponseType(StatusCodes.Status200OK)]
@@ -24,7 +22,7 @@ public class DeleteDepartmentAction : ExtendedControllerBase
 		var deleteCompanyCommand = new DeleteDepartmentCommand(
 			Guid.NewGuid(), new DepartmentId(request.DepartmentId.Value)
 		);
-		
+
 		_deleteDepartmentCommandHandler.Handle(deleteCompanyCommand);
 
 		return Ok();

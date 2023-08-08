@@ -8,10 +8,8 @@ public class DeleteCompanyAction : ExtendedControllerBase
 {
 	private readonly DeleteCompanyCommandHandler _deleteCompanyCommandHandler;
 
-	public DeleteCompanyAction(DeleteCompanyCommandHandler deleteCompanyCommandHandler)
-	{
+	public DeleteCompanyAction(DeleteCompanyCommandHandler deleteCompanyCommandHandler) =>
 		_deleteCompanyCommandHandler = deleteCompanyCommandHandler;
-	}
 
 	[HttpDelete("api/Company/DeleteCompany")]
 	[ProducesResponseType(StatusCodes.Status200OK)]
@@ -24,7 +22,7 @@ public class DeleteCompanyAction : ExtendedControllerBase
 		var deleteCompanyCommand = new DeleteCompanyCommand(
 			Guid.NewGuid(), new CompanyId(request.CompanyId.Value)
 		);
-		
+
 		_deleteCompanyCommandHandler.Handle(deleteCompanyCommand);
 
 		return Ok();

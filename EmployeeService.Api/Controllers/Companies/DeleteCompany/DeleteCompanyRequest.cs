@@ -5,5 +5,7 @@ namespace EmployeeService.Api.Controllers.Companies.DeleteCompany;
 
 public record DeleteCompanyRequest
 {
-	[Required, NotNull] public int? CompanyId { get; set; }
+	[Required]
+	[NotNull]
+	public int? CompanyId { get; set; }
 }

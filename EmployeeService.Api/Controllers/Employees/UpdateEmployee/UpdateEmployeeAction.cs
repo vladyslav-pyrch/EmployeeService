@@ -12,11 +12,10 @@ namespace EmployeeService.Api.Controllers.Employees.UpdateEmployee;
 [ApiController]
 public class UpdateEmployeeAction : ExtendedControllerBase
 {
-	private readonly UpdateEmployeeCommandHandler _updateEmployeeCommandHandler;
-
 	private readonly GetPassportByEmployeeIdQueryHandler _getPassportByEmployeeIdQueryHandler;
 
 	private readonly GetWorkplaceByEmployeeIdQueryHandler _getWorkplaceByEmployeeIdQueryHandler;
+	private readonly UpdateEmployeeCommandHandler _updateEmployeeCommandHandler;
 
 	public UpdateEmployeeAction(UpdateEmployeeCommandHandler updateEmployeeCommandHandler,
 		GetPassportByEmployeeIdQueryHandler getPassportByEmployeeIdQueryHandler,
@@ -36,7 +35,7 @@ public class UpdateEmployeeAction : ExtendedControllerBase
 			return BadRequest(ModelState);
 
 		UpdateEmployeeCommand updateEmployeeCommand = CreateUpdateEmployeeCommand(request);
-		
+
 		_updateEmployeeCommandHandler.Handle(updateEmployeeCommand);
 
 		return Ok();
@@ -54,10 +53,10 @@ public class UpdateEmployeeAction : ExtendedControllerBase
 
 		if (request.PhoneNumber != null)
 			phoneNumber = new PhoneNumber(request.PhoneNumber);
-		
+
 		if (request.PassportType != null || request.PassportNumber != null)
 			passport = MakeUpdatedPassport(request, employeeId);
-		
+
 		if (request.CompanyId != null || request.DepartmentId != null)
 			workplace = MakeUpdatedWorkplace(request, employeeId);
 
@@ -70,16 +69,15 @@ public class UpdateEmployeeAction : ExtendedControllerBase
 	private Passport GetOldPassport(EmployeeId employeeId)
 	{
 		var getPassportByEmployeeId = new GetPassportByEmployeeIdQuery(employeeId);
-			
+
 		return _getPassportByEmployeeIdQueryHandler.Handle(getPassportByEmployeeId);
 	}
 
 	private Workplace GetOldWorkplace(EmployeeId employeeId)
 	{
 		var getWorkplaceByEmployeeId = new GetWorkplaceByEmployeeIdQuery(employeeId);
-			
+
 		return _getWorkplaceByEmployeeIdQueryHandler.Handle(getWorkplaceByEmployeeId);
-		
 	}
 
 	private Passport MakeUpdatedPassport(UpdateEmployeeRequest request, EmployeeId employeeId)
