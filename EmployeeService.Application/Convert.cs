@@ -29,12 +29,17 @@ internal static class Convert
 
 	public static Department ToDepartment(DepartmentDto departmentDto)
 	{
+		return ToDepartment(departmentDto, null!);
+	}
+
+	public static Department ToDepartment(DepartmentDto departmentDto, List<EmployeeId> employees)
+	{
 		var id = new DepartmentId(departmentDto.Id);
 		string name = departmentDto.Name;
 		var phoneNumber = new PhoneNumber(departmentDto.PhoneNumber);
 		var companyId = new CompanyId(departmentDto.CompanyId);
 
-		return new Department(id, name, phoneNumber, companyId);
+		return new Department(id, name, phoneNumber, companyId, employees);
 	}
 
 	public static Workplace ToWorkplace(WorkplaceDto workplaceDto)
@@ -51,5 +56,13 @@ internal static class Convert
 		var passportType = new PassportType(passportDto.Type);
 
 		return new Passport(passportNumber, passportType);
+	}
+
+	public static Company ToCompany(CompanyDto companyDto, List<Department> departments)
+	{
+		var id = new CompanyId(companyDto.Id);
+		string name = companyDto.Name;
+
+		return new Company(id, name, departments);
 	}
 }

@@ -1,6 +1,9 @@
+using EmployeeService.Application.Companies.AddDepartmentToCompany;
 using EmployeeService.Application.Companies.CreateCompany;
 using EmployeeService.Application.Companies.DeleteCompany;
 using EmployeeService.Application.Companies.DeleteDepartment;
+using EmployeeService.Application.Companies.GetAllDepartmentsFromCompany;
+using EmployeeService.Application.Companies.GetCompanyById;
 using EmployeeService.Application.Companies.GetDepartmentOfEmployee;
 using EmployeeService.Application.Companies.GetNewCompanyId;
 using EmployeeService.Application.Companies.GetNewDepartmentId;
@@ -36,9 +39,11 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 builder.Services.AddScoped<GetDepartmentOfEmployeeQueryHandler>();
+builder.Services.AddScoped<GetAllDepartmentsFromCompanyQueryHandler>();
 builder.Services.AddScoped<GetAllEmployeesOfCompanyQueryHandler>();
 builder.Services.AddScoped<GetAllEmployeesFromDepartmentQueryHandler>();
 builder.Services.AddScoped<GetEmployeeByIdQueryHandler>();
+builder.Services.AddScoped<GetCompanyByIdQueryHandler>();
 builder.Services.AddScoped<GetWorkplaceByEmployeeIdQueryHandler>();
 builder.Services.AddScoped<GetPassportByEmployeeIdQueryHandler>();
 builder.Services.AddScoped<GetNewCompanyIdQueryHandler>();
@@ -50,6 +55,7 @@ builder.Services.AddScoped<IsThereCompanyQueryHandler>();
 builder.Services.AddScoped<IsThereEmployeeQueryHandler>();
 
 builder.Services.AddScoped<CreateCompanyCommandHandler>();
+builder.Services.AddScoped<AddDepartmentToCompanyCommandHandler>();
 builder.Services.AddScoped<DeleteCompanyCommandHandler>();
 builder.Services.AddScoped<DeleteDepartmentCommandHandler>();
 builder.Services.AddScoped<CreateEmployeeCommandHandler>();

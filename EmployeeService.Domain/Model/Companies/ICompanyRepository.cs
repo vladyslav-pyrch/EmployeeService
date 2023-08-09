@@ -10,4 +10,8 @@ public interface ICompanyRepository : IRepository
 	public void DeleteCompanyById(CompanyId companyId);
 	
 	public void DeleteDepartmentById(DepartmentId departmentId);
+	
+	public void UpdateCompany(Company company);
+	
+	void AddDepartment(Department department);
 }

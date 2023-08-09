@@ -1,6 +1,7 @@
 ﻿using EmployeeService.Domain.Model.Companies;
 using EmployeeService.Domain.Model.Companies.Departments;
 using EmployeeService.Infrastructure.DataAccess;
+using Microsoft.EntityFrameworkCore;
 
 namespace EmployeeService.Infrastructure.Domain.Companies;
 
@@ -12,6 +13,8 @@ public class CompanyRepository : ICompanyRepository
 
 	public void CreateCompany(Company company)
 	{
+		// Can be replaced with call of UpdateCompany(company)
+		
 		var companyModel = new CompanyModel { Id = company.Identity.Deconvert(), Name = company.Name };
 
 		_dbContext.Companies.Add(companyModel);
@@ -49,6 +52,32 @@ public class CompanyRepository : ICompanyRepository
 		_dbContext.Departments.Attach(departmentModelToRemove);
 
 		_dbContext.Departments.Remove(departmentModelToRemove);
+	}
+
+	public void UpdateCompany(Company company)
+	{
+		var companyModel = new CompanyModel
+		{
+			Id = company.Identity.Deconvert(),
+			Name = company.Name
+		};
+
+		_dbContext.Companies.Attach(companyModel);
+		_dbContext.Companies.Update(companyModel);
+	}
+
+	public void AddDepartment(Department department)
+	{
+		var departmentModel = new DepartmentModel
+		{
+			Id = department.Identity.Deconvert(),
+			Name = department.Name,
+			Phone = department.PhoneNumber.Number,
+			CompanyId = department.CompanyId.Deconvert()
+		};
+
+		_dbContext.Departments.Attach(departmentModel);
+		_dbContext.Departments.Add(departmentModel);
 	}
 
 	public void Save() => _dbContext.SaveChanges();
