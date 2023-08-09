@@ -1,3 +1,3 @@
 ﻿namespace EmployeeService.Api.Contracts;
 
-public record DepartmentDto(string Name, string Phone);
+public record DepartmentDto(int Id, string Name, string Phone);

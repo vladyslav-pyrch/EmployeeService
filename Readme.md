@@ -28,5 +28,5 @@ Employee model:
 ```
 All methods should be implemented as HTTP requests in JSON format.
 
-ToDo: AddDepartmentToCompany, UpdateCompany, UpdateDepartment, GetAllCompanies, 
+ToDo:UpdateCompany, UpdateDepartment, GetAllCompanies, 
 GetAllDepartmentsOfCompany

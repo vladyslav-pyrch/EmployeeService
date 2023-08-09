@@ -40,6 +40,7 @@ public abstract class ExtendedControllerBase : ControllerBase
 			employee.Passport.Number.Number
 		);
 		var departmentDto = new DepartmentDto(
+			department.Identity.Deconvert(),
 			department.Name,
 			department.PhoneNumber.Number
 		);
