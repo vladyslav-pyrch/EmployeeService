@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace EmployeeService.Api.Controllers.Companies.DeleteDepartment;
 
+[ApiController]
 public class DeleteDepartmentAction : ExtendedControllerBase
 {
 	private readonly DeleteDepartmentCommandHandler _deleteDepartmentCommandHandler;

@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace EmployeeService.Api.Controllers.Employees.GetAllEmployeesFromDepartment;
 
+[ApiController]
 public class GetAllEmployeesFromDepartmentAction : ExtendedControllerBase
 {
 	private readonly GetAllEmployeesFromDepartmentQueryHandler _getAllEmployeesFromDepartmentQueryHandler;

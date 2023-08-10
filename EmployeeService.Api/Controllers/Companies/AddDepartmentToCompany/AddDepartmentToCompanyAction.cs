@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace EmployeeService.Api.Controllers.Companies.AddDepartmentToCompany;
 
+[ApiController]
 public class AddDepartmentToCompanyAction : ExtendedControllerBase
 {
 	private readonly AddDepartmentToCompanyCommandHandler _addDepartmentToCompanyCommandHandler;

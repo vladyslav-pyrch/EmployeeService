@@ -1,11 +1,11 @@
 ﻿using EmployeeService.Api.Contracts;
 using EmployeeService.Application.Companies.GetAllDepartmentsFromCompany;
 using EmployeeService.Domain.Model.Companies;
-using EmployeeService.Domain.Model.Companies.Departments;
 using Microsoft.AspNetCore.Mvc;
 
 namespace EmployeeService.Api.Controllers.Companies.GetAllDepartmentsFromCompany;
 
+[ApiController]
 public class GetAllDepartmentsFromCompanyAction : ExtendedControllerBase
 {
 	private readonly GetAllDepartmentsFromCompanyQueryHandler _getAllDepartmentsFromCompanyQueryHandler;

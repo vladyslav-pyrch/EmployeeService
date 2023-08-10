@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace EmployeeService.Api.Controllers.Companies.DeleteCompany;
 
+[ApiController]
 public class DeleteCompanyAction : ExtendedControllerBase
 {
 	private readonly DeleteCompanyCommandHandler _deleteCompanyCommandHandler;
