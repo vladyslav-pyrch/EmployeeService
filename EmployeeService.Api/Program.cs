@@ -5,12 +5,15 @@ using EmployeeService.Application.Companies.DeleteDepartment;
 using EmployeeService.Application.Companies.GetAllCompanies;
 using EmployeeService.Application.Companies.GetAllDepartmentsFromCompany;
 using EmployeeService.Application.Companies.GetCompanyById;
+using EmployeeService.Application.Companies.GetDepartmentById;
 using EmployeeService.Application.Companies.GetDepartmentOfEmployee;
 using EmployeeService.Application.Companies.GetNewCompanyId;
 using EmployeeService.Application.Companies.GetNewDepartmentId;
 using EmployeeService.Application.Companies.IsThereCompany;
 using EmployeeService.Application.Companies.IsThereDepartment;
 using EmployeeService.Application.Companies.IsThereDepartmentInCompany;
+using EmployeeService.Application.Companies.UpdateCompany;
+using EmployeeService.Application.Companies.UpdateDepartment;
 using EmployeeService.Application.Employees.CreateEmployee;
 using EmployeeService.Application.Employees.DeleteEmployee;
 using EmployeeService.Application.Employees.GetAllEmployeeOfCompany;
@@ -45,6 +48,7 @@ builder.Services.AddScoped<GetAllEmployeesOfCompanyQueryHandler>();
 builder.Services.AddScoped<GetAllEmployeesFromDepartmentQueryHandler>();
 builder.Services.AddScoped<GetEmployeeByIdQueryHandler>();
 builder.Services.AddScoped<GetCompanyByIdQueryHandler>();
+builder.Services.AddScoped<GetDepartmentByIdQueryHandler>();
 builder.Services.AddScoped<GetAllCompaniesQueryHandler>();
 builder.Services.AddScoped<GetWorkplaceByEmployeeIdQueryHandler>();
 builder.Services.AddScoped<GetPassportByEmployeeIdQueryHandler>();
@@ -63,6 +67,8 @@ builder.Services.AddScoped<DeleteDepartmentCommandHandler>();
 builder.Services.AddScoped<CreateEmployeeCommandHandler>();
 builder.Services.AddScoped<DeleteEmployeeCommandHandler>();
 builder.Services.AddScoped<UpdateEmployeeCommandHandler>();
+builder.Services.AddScoped<UpdateCompanyCommandHandler>();
+builder.Services.AddScoped<UpdateDepartmentCommandHandler>();
 
 builder.Services.AddScoped<ISqlConnectionFactory, SqliteConnectionFactory>(provider =>
 {

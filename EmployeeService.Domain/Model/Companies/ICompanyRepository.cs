@@ -12,6 +12,8 @@ public interface ICompanyRepository : IRepository
 	public void DeleteDepartmentById(DepartmentId departmentId);
 	
 	public void UpdateCompany(Company company);
+
+	public void UpdateDepartment(Department department);
 	
-	void AddDepartment(Department department);
+	public void AddDepartment(Department department);
 }

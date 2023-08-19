@@ -27,5 +27,3 @@ Employee model:
 }
 ```
 All methods should be implemented as HTTP requests in JSON format.
-
-ToDo:UpdateCompany, UpdateDepartment

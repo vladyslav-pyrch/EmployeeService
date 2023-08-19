@@ -55,16 +55,6 @@ public class Company : Entity<CompanyId>
 		return department;
 	}
 
-	public void RemoveDepartment(DepartmentId departmentId)
-	{
-		Department departmentToRemove = GetDepartmentById(departmentId);
-
-		_departments.Remove(departmentToRemove);
-
-		AddDomainEvent(new DepartmentRemoved(Source));
-	}
-
-
 	public void ChangeName(string name)
 	{
 		Name = name;
