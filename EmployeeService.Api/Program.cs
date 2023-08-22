@@ -89,6 +89,13 @@ builder.Services.AddScoped<IEmployeeRepository, EmployeeRepository>();
 builder.Services.AddScoped<IDomainEventDispatcher, DomainEventDispatcher>();
 builder.Services.AddScoped<DomainEventSource>();
 
+builder.Services.AddCors(options =>
+{
+	options.AddDefaultPolicy(policyBuilder =>
+		policyBuilder.AllowAnyOrigin()
+	);
+});
+
 WebApplication app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -99,6 +106,8 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+
+app.UseCors();
 
 app.UseAuthorization();
 

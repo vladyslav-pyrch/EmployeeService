@@ -2,4 +2,4 @@
 
 namespace EmployeeService.Api.Controllers.Companies.GetDepartmentById;
 
-public record GetDepartmentByIdResponse(DepartmentDto DepartmentDto);
+public record GetDepartmentByIdResponse(DepartmentDto Department);

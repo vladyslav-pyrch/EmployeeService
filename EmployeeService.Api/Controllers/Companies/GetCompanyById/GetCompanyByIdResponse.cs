@@ -2,4 +2,4 @@
 
 namespace EmployeeService.Api.Controllers.Companies.GetCompanyById;
 
-public record GetCompanyByIdResponse(CompanyDto CompanyDto);
+public record GetCompanyByIdResponse(CompanyDto Company);
