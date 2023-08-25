@@ -16,7 +16,7 @@ using EmployeeService.Application.Companies.UpdateCompany;
 using EmployeeService.Application.Companies.UpdateDepartment;
 using EmployeeService.Application.Employees.CreateEmployee;
 using EmployeeService.Application.Employees.DeleteEmployee;
-using EmployeeService.Application.Employees.GetAllEmployeeOfCompany;
+using EmployeeService.Application.Employees.GetAllEmployeesOfCompany;
 using EmployeeService.Application.Employees.GetAllEmployeesFromDepartment;
 using EmployeeService.Application.Employees.GetEmployeeById;
 using EmployeeService.Application.Employees.GetNewEmployeeId;
@@ -93,6 +93,8 @@ builder.Services.AddCors(options =>
 {
 	options.AddDefaultPolicy(policyBuilder =>
 		policyBuilder.AllowAnyOrigin()
+			.AllowAnyMethod()
+			.AllowAnyHeader()
 	);
 });
 

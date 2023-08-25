@@ -15,7 +15,7 @@ public class GetAllEmployeesFromDepartmentAction : ExtendedControllerBase
 		GetAllEmployeesFromDepartmentQueryHandler getAllEmployeesFromDepartmentQueryHandler) =>
 		_getAllEmployeesFromDepartmentQueryHandler = getAllEmployeesFromDepartmentQueryHandler;
 
-	[HttpGet("api/Employee/GetAllEmployeeFromDepartment")]
+	[HttpGet("api/Employee/GetAllEmployeesFromDepartment")]
 	[ProducesResponseType(typeof(GetAllEmployeesFromDepartmentResponse), StatusCodes.Status200OK)]
 	[ProducesResponseType(StatusCodes.Status400BadRequest)]
 	public IActionResult Invoke([FromQuery] GetAllEmployeesFromDepartmentRequest request)

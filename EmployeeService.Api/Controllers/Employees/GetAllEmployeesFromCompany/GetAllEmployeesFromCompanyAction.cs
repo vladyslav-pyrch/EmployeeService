@@ -1,5 +1,5 @@
 ﻿using EmployeeService.Api.Contracts;
-using EmployeeService.Application.Employees.GetAllEmployeeOfCompany;
+using EmployeeService.Application.Employees.GetAllEmployeesOfCompany;
 using EmployeeService.Domain.Model.Companies;
 using EmployeeService.Domain.Model.Employees;
 using Microsoft.AspNetCore.Mvc;
