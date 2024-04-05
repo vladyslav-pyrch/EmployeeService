@@ -1,5 +1,5 @@
 ﻿Employee Web Service made on the .Net Core platform.
-The service should be able to:
+The service is able to:
 
 1. Add employees, the Id of the added employee should come in response.
 2. Delete employees by Id.
