@@ -1,12 +1,11 @@
 ﻿Employee Web Service made on the .Net Core platform.
-The service is able to:
+The service can:
 
-1. Add employees, the Id of the added employee should come in response.
-2. Delete employees by Id.
-3. Output the list of employees for the specified company. All available fields.
-4. Output the list of employees for the specified department of the company. All available fields.
-5. Modify an employee by his Id. Only those fields should be changed,
-that are specified in the query.
+1. Add employees, the ID of the added employee comes in response.
+2. Delete an employee by ID.
+3. Output the list of employees for the specified company.
+4. Output the list of employees for the specified department of the company.
+5. Modify an employee by their ID. A field is changed, if it is specified in the query.
 
 Employee model:
 ```json
@@ -26,4 +25,4 @@ Employee model:
   }
 }
 ```
-All methods should be implemented as HTTP requests in JSON format.
+All methods are implemented as HTTP requests in JSON format.
